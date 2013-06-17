@@ -1,4 +1,4 @@
 pyUI
 ====
 
-Library for creating user interfaces using pygame.
+Library for creating graphicsl user interfaces using pygame.
