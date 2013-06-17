@@ -26,7 +26,7 @@ class DefaultPanelGraphicsParameters(Parameters):
         self.background_color = background_color
 
 class DefaultButtonGraphicsParameters(Parameters):
-    def __init__(self, topleft=(0,0), dimensions=(100,20),
+    def __init__(self, topleft=(0,0), dimensions=(100,40),
                  color=(180, 180, 180), highlight_color=None):
         self.topleft = topleft
         self.dimensions = dimensions
@@ -46,3 +46,30 @@ class DefaultTextGraphicsParameters(Parameters):
         self.bold = bold
         self.italic = italic
         self.underline = underline
+
+class DefaultTextBoxGraphicsParameters(Parameters):
+    def __init__(self, topleft=(0, 0), dimensions=(150, 30),
+                 bg_color=(255, 255, 255, 255)):
+        self.topleft = topleft
+        self.dimensions = dimensions
+        self.bg_color = bg_color
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

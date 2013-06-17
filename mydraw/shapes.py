@@ -1,9 +1,12 @@
 import pygame, math
 from pygame.locals import *
 
-def drawRoundedRect(width, height, radius, colors, border_width=1):
-    surf = pygame.Surface((width + 2 * radius, height + 2 * radius),
-                          flags = SRCALPHA)
+def drawRoundedRect(width, height, radius, colors, border_width=1, surface=None):
+    if surface:
+        surf = surface
+    else:
+        surf = pygame.Surface((width + 2 * radius, height + 2 * radius),
+                              flags = SRCALPHA)
     rect = surf.get_rect()
     
     #Draw corners:

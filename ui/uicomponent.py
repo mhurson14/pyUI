@@ -9,13 +9,64 @@ class UIComponent:
 
         self.graphics = graphics(graphics_params)
 
+        self.surface_type = surface
+        self.graphics_type = graphics
+        self.surface_params = surface_params
+        self.graphics_params = graphics_params
+
         self.visible = False
 
         self.absolute_rect = None
 
         self.calculateAbsoluteRect()
+        
+        self.state = 'normal'
 
+    def onMouseMove(self, event):
+        changed = False
+        if self.state != 'pressed':
+            if self.absolute_rect.collidepoint(event.pos):
+                if self.state != 'hover':
+                    changed = True
+                self.setState('hover')
+                self.mouseMoveCollide(event)
+            elif self.state == 'hover':
+                self.setState('normal')
+                changed = True
+                self.mouseMoveMiss(event)
+            if changed:
+                self.draw()
     
+    def onMouseOnePress(self, event):
+        if self.absolute_rect.collidepoint(event.pos):
+            self.setState('pressed')
+            self.mouseOnePressCollide(event)
+            self.draw()
+    
+    def onMouseOneRelease(self, event):
+        if self.state == 'pressed':
+            if self.absolute_rect.collidepoint(event.pos):
+                self.setState('hover')
+                self.mouseOneReleaseCollide(event)
+            else:
+                self.setState('normal')
+                self.mouseOneReleaseMiss(event)
+            self.draw()
+    
+    def mouseMoveCollide(self, event):
+        pass
+    
+    def mouseMoveMiss(self, event):
+        pass
+    
+    def mouseOnePressCollide(self, event):
+        pass
+    
+    def mouseOneReleaseCollide(self, event):
+        pass
+    
+    def mouseOneReleaseMiss(self, event):
+        pass
 
     def addMember(self, member):
         member.setParent(self)
@@ -62,6 +113,26 @@ class UIComponent:
 
     def drawMembers(self):
         pass
+
+class FocusableUIComponent(UIComponent):
+    def __init__(self, parent, surface, graphics, surface_params, graphics_params):
+        
+        super().__init__(parent, surface, graphics,
+                         surface_params, graphics_params)
+        
+        self.focus = False
+
+    def mouseOneReleaseCollide(self, event):
+        self.focus = True
+
+    def mouseOneReleaseMiss(self, event):
+        self.focus = False
+    
+    def hasFocus(self):
+        return self.focus
+    
+    def setFocus(self, val):
+        self.focus = val
 
 class UIContainer(UIComponent):
     def __init__(self, parent, surface, graphics, surface_params, graphics_params):

@@ -4,6 +4,8 @@ from ui.parameters import *
 
 class DisplaySurface:
     def __init__(self, params):
+
+        self.params = params
         
         self.dimensions = params.dimensions
         self.topleft = params.topleft
@@ -68,8 +70,6 @@ class TransparentBackgroundDisplaySurface(DisplaySurface):
         self.surface = pygame.Surface(params.dimensions, **kwargs)
 
         self.surface.set_colorkey((0,0,0))
-
-        print(self.surface.get_alpha())
 
 class ScreenSurface(DisplaySurface):
     def __init__(self, params=None):

@@ -9,10 +9,14 @@ from ui.displaysurface import *
 from ui.panelgraphics import *
 from ui.panel import *
 from ui.button import *
+from ui.textbox import *
+from ui.textboxgraphics import *
 from ui.uicomponent import *
 from ui.components.menus import *
 from ui.components.panels import *
 from ui.components.buttons import *
+from ui.components.labels import *
+from ui.screen import *
 from uitestevents import *
 
 def main():
@@ -25,8 +29,10 @@ def main():
     area = screen.get_rect()
 
     clock = pygame.time.Clock()
+
+    ui_screen = Screen()
     
-    menu = DefaultMenu(dimensions = (area.width, 150),
+    menu = DefaultMenu(parent = ui_screen, dimensions = (area.width, 150),
                        topleft = (0, area.bottom - 150))
     menu.setVisible(True)
     
@@ -42,9 +48,26 @@ def main():
                         color = (100, 128, 160), text_in='Press',
                         font_type='/usr/share/fonts/truetype/freefont/FreeSans.ttf')
     btn.setVisible(True)
-    panel.addComponents([btn])
 
-    ui.event.addListener(ui.internals.BUTTONPRESSEVENT, btn, btnPressed)
+    tbox = TextBox(None, DisplaySurface, DefaultTextBoxGraphics,
+                   DisplaySurfaceParameters(\
+                       dimensions=(150, 50),
+                       topleft=(300, 20),
+                       flags=SRCALPHA),
+                   DefaultTextBoxGraphicsParameters(dimensions=(150, 50)))
+    tbox.setVisible(True)
+    panel.addComponents([btn, tbox])
+
+    panel1 = DefaultPanel(parent = ui_screen, topleft = (area.width - 300, 0),
+                          dimensions = (300, 100), outline_width = 1, border_width = 10)
+
+    label = DefaultLabel((20, 20), "Clicks: 0")
+    label.setVisible(True)
+    panel1.addComponent(label)
+    panel1.setVisible(True)
+
+    c_counter = ClickCounter(label)
+    ui.event.addListener(ui.internals.BUTTONPRESSEVENT, btn, c_counter.onButtonPress)
 
     background = pygame.Surface((area.width, area.height))
     background.fill((0, 150, 150))
@@ -63,9 +86,25 @@ def main():
 
         screen.blit(background, area)
         menu.draw()
+        panel1.draw()
 
         pygame.display.flip()
-        
+
+class ClickCounter:
+    def __init__(self, label):
+        self.count = 0
+        self.label = label
+
+    def increment(self):
+        self.count += 1
+
+    def getClickCount(self):
+        return self.count
+
+    def onButtonPress(self, event):
+        self.increment()
+        self.label.setText('Clicks: ' + str(self.getClickCount()))
+
 
 
 

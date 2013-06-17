@@ -2,12 +2,12 @@ from ui import *
 from pygame.locals import *
 
 class DefaultPanel(panel.Panel):
-    def __init__(self, dimensions=(100, 100), topleft=(0, 0),
+    def __init__(self, parent=None, dimensions=(100, 100), topleft=(0, 0),
                  outline_width=1, border_width=12, buffer_width=0,
                  outline_color=(0, 0, 0), border_color=(255, 255, 255),
                  background_color=(100, 200, 100)):
 
-        super().__init__(None, displaysurface.DisplaySurface,
+        super().__init__(parent, displaysurface.DisplaySurface,
                          panelgraphics.DefaultPanelGraphics,
                          parameters.DisplaySurfaceParameters(\
                              dimensions=dimensions,

@@ -6,7 +6,7 @@ def getSizeOfText(text, font_size, font_type, bold, italic, underline):
     font.set_bold(bold)
     font.set_italic(italic)
     font.set_underline(underline)
-    print(font.size(text))
+    
     return font.size(text)
 
 def isEdgePixel(image, x, y):
@@ -51,8 +51,6 @@ def cleanImage(image, distance):
     key = image.get_colorkey()
     if key:
         width, height = image.get_rect().size
-        print(width * height)
-        print(key)
         k = 0
         for i in range(height):
             for j in range(width):
@@ -62,14 +60,11 @@ def cleanImage(image, distance):
                     p[1] <= key[1] + distance and p[2] <= key[2] + distance):
                     image.set_at((j, i), key)
                     k += 1
-        print(k)
 
 def cleanImage2(image, color, distance=0):
     key = image.get_colorkey()
     if key:
         width, height = image.get_rect().size
-        print(width * height)
-        print(key)
         k = 0
         for i in range(height):
             for j in range(width):
@@ -79,14 +74,11 @@ def cleanImage2(image, color, distance=0):
                     not (p[2] >= color[2] - distance and p[2] <= color[2] + distance)):
                     image.set_at((j, i), key)
                     k += 1
-        print(k)
 
 def cleanImage3(image):
     key = image.get_colorkey()
     if key:
         width, height = image.get_rect().size
-        print(width * height)
-        print(key)
         k = 0
         for i in range(height):
             for j in range(width):
@@ -94,7 +86,6 @@ def cleanImage3(image):
                 if True:
                     image.set_at((j, i), key)
                     k += 1
-        print(k)
 
 
 

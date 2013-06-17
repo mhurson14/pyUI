@@ -1,6 +1,30 @@
 import pygame, math
 from pygame.locals import *
 
+def fillSolid(surf, color, start_row, end_row, bg_color=None):
+    num_rows = end_row - start_row
+
+    if not bg_color:
+        bg_color = surf.get_at((0, 0))
+
+    rect = surf.get_rect()
+
+    for y in range(start_row, end_row + 1):
+        x = 0
+
+        #Find the shape's border
+        while surf.get_at((x, y)) == bg_color and x < rect.width:
+            x += 1
+
+        #Find the inside of the shape
+        while surf.get_at((x, y)) != bg_color and x < rect.width:
+            x += 1
+
+        #Fill the row
+        while surf.get_at((x, y)) == bg_color and x < rect.width:
+            surf.set_at((x, y), color)
+            x += 1
+
 def fillVerticalGradient(surf, start_color, end_color, start_row, end_row, bg_color=None):
     num_rows = end_row - start_row
 
