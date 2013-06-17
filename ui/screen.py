@@ -6,3 +6,8 @@ class Screen(UIComponent):
 
         super().__init__(None, ui.displaysurface.ScreenSurface,
                          ui.nullgraphics.NullGraphics, None, None)
+
+        self.setVisible(True)
+
+    def getVisible(self):
+        return self.visible

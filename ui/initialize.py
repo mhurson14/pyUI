@@ -4,5 +4,9 @@ from ui.eventdispatcher import EventDispatcher
 
 def init():
     print("Initializing...")
-    event.registerEventAndDispatcher(internals.BUTTONPRESSEVENT, EventDispatcher())
+    event.createDispatcher(internals.MOUSEMOTIONEVENT)
+    event.createDispatcher(internals.MOUSEBUTTONDOWNEVENT)
+    event.createDispatcher(internals.MOUSEBUTTONUPEVENT)
+    event.createDispatcher(internals.BUTTONPRESSEVENT)
+    event.createDispatcher(internals.KEYDOWNEVENT)
     print("Done!")

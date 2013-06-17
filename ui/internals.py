@@ -1,12 +1,5 @@
 import ui.eventdispatcher
 
-#Listeners
-mouseMoveListeners = ui.eventdispatcher.EventDispatcher()
-
-mouseOnePressListeners = ui.eventdispatcher.EventDispatcher()
-
-mouseOneReleaseListeners = ui.eventdispatcher.EventDispatcher()
-
 #Event types: keys are event types, values are listeners for those event types
 event_types={}
 
@@ -14,4 +7,9 @@ event_types={}
 UIEVENT = 25
 
 #Event IDs:
+KEYDOWNEVENT = 2
+MOUSEMOTIONEVENT = 4
+MOUSEBUTTONDOWNEVENT = 5
+MOUSEBUTTONUPEVENT = 6
 BUTTONPRESSEVENT = 25.0001
+CARETTIMEREVENT = 25.0002

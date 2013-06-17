@@ -26,3 +26,6 @@ class Text(UIComponent):
         self.display_surface = self.surface_type(self.surface_params)
 
         self.graphics = self.graphics_type(self.graphics_params)
+
+    def getText(self):
+        return self.text

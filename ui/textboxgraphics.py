@@ -24,8 +24,6 @@ class DefaultTextBoxGraphics:
 
         colors = [(128, 128, 128, 200), (128, 128, 128, 255)]
         
-
-        #radius = int(self.dimensions[1] / 5)
         radius = 0
 
         self.image = pygame.Surface(self.dimensions, flags=SRCALPHA)

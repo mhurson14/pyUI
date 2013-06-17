@@ -8,9 +8,14 @@ class EventDispatcher:
         self.listeners[listener] = method
 
     def removeListener(self, listener):
-        del self.listeners[listener]
+        try:
+            del self.listeners[listener]
+            return True
+        except KeyError as e:
+            return False
 
     def notify(self, event):
         for listener in self.listeners:
-            method = self.listeners[listener]
-            method(event)
+            if listener.getVisible():
+                method = self.listeners[listener]
+                method(event)

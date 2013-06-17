@@ -13,36 +13,21 @@ class Button(UIComponent):
         self.text = text
         self.addMember(self.text)
 
+        self.registerEvent(internals.MOUSEMOTIONEVENT, self.onMouseMove)
+        self.registerEvent(internals.MOUSEBUTTONDOWNEVENT, self.onMouseOnePress)
+        self.registerEvent(internals.MOUSEBUTTONUPEVENT, self.onMouseOneRelease)
+
     def drawMembers(self):
         self.text.draw()
+
+    def setMembersVisible(self, val):
+        self.text.setVisibleRecursive(val)
 
     def setState(self, state):
         self.graphics.setState(state)
         self.state = state
-
-    def setVisible(self, val):
-        self.visible = val
-
-        if val:
-            #Add this button as a listener for mouse movements
-            internals.mouseMoveListeners.addListener(self, self.onMouseMove)
-
-            #Add this button as a listener for mouse press events
-            internals.mouseOnePressListeners.addListener(self, self.onMouseOnePress)
-
-            #Add this button as a listener for mouse release events
-            internals.mouseOneReleaseListeners.addListener(self, self.onMouseOneRelease)
-        else:
-            #Add this button as a listener for mouse movements
-            internals.mouseMoveListeners.removeListener(self)
-
-            #Add this button as a listener for mouse press events
-            internals.mouseOnePressListeners.removeListener(self)
-
-            #Add this button as a listener for mouse release events
-            internals.mouseOneReleaseListeners.removeListener(self)
     
-    def mouseOneReleaseCollide(self, event):
+    def pressedMouseOneReleaseCollide(self, event):
         pygame.event.post(ui.uievent.ButtonPressEvent(self).getEvent())
 
 

@@ -16,6 +16,7 @@ from ui.components.menus import *
 from ui.components.panels import *
 from ui.components.buttons import *
 from ui.components.labels import *
+from ui.components.textboxes import *
 from ui.screen import *
 from uitestevents import *
 
@@ -49,12 +50,9 @@ def main():
                         font_type='/usr/share/fonts/truetype/freefont/FreeSans.ttf')
     btn.setVisible(True)
 
-    tbox = TextBox(None, DisplaySurface, DefaultTextBoxGraphics,
-                   DisplaySurfaceParameters(\
-                       dimensions=(150, 50),
-                       topleft=(300, 20),
-                       flags=SRCALPHA),
-                   DefaultTextBoxGraphicsParameters(dimensions=(150, 50)))
+    tbox = DefaultTextBox(topleft = (300, 20),
+                          font_type='/usr/share/fonts/truetype/freefont/FreeSans.ttf',)
+                          
     tbox.setVisible(True)
     panel.addComponents([btn, tbox])
 
@@ -67,7 +65,7 @@ def main():
     panel1.setVisible(True)
 
     c_counter = ClickCounter(label)
-    ui.event.addListener(ui.internals.BUTTONPRESSEVENT, btn, c_counter.onButtonPress)
+    btn.registerEvent(ui.internals.BUTTONPRESSEVENT, c_counter.onButtonPress)
 
     background = pygame.Surface((area.width, area.height))
     background.fill((0, 150, 150))
@@ -82,7 +80,11 @@ def main():
                 return
             if event.type == KEYDOWN and event.key == K_v:
                 screen.blit(background, area)
-                panel.setVisible(not panel.getVisible())
+                panel.setVisibleRecursive(not panel.getVisible())
+            if event.type == KEYDOWN and event.key == K_p:
+                for event in ui.internals.event_types:
+                    print(ui.internals.event_types[event])
+                print('\n\n\n')
 
         screen.blit(background, area)
         menu.draw()

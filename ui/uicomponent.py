@@ -1,4 +1,6 @@
 import pygame
+import ui
+from ui import internals
 
 class UIComponent:
     def __init__(self, parent, surface, graphics, surface_params, graphics_params):
@@ -22,6 +24,16 @@ class UIComponent:
         
         self.state = 'normal'
 
+        #A dictionary containing the events this component is following:
+        #   key: the ui_type of the event
+        #   val: the function to be called in response to the event
+        self.events = {}
+
+        self.timers = {}
+
+    def setState(self, state):
+        self.state = state
+
     def onMouseMove(self, event):
         changed = False
         if self.state != 'pressed':
@@ -38,20 +50,26 @@ class UIComponent:
                 self.draw()
     
     def onMouseOnePress(self, event):
-        if self.absolute_rect.collidepoint(event.pos):
+        if event.button == 1 and self.absolute_rect.collidepoint(event.pos):
             self.setState('pressed')
             self.mouseOnePressCollide(event)
             self.draw()
     
     def onMouseOneRelease(self, event):
-        if self.state == 'pressed':
-            if self.absolute_rect.collidepoint(event.pos):
-                self.setState('hover')
-                self.mouseOneReleaseCollide(event)
+        if event.button == 1:
+            if self.state == 'pressed':
+                if self.absolute_rect.collidepoint(event.pos):
+                    self.setState('hover')
+                    self.pressedMouseOneReleaseCollide(event)
+                else:
+                    self.setState('normal')
+                    self.pressedMouseOneReleaseMiss(event)
+                self.draw()
             else:
-                self.setState('normal')
-                self.mouseOneReleaseMiss(event)
-            self.draw()
+                if self.absolute_rect.collidepoint(event.pos):
+                    self.mouseOneReleaseCollide(event)
+                else:
+                    self.mouseOneReleaseMiss(event)
     
     def mouseMoveCollide(self, event):
         pass
@@ -61,13 +79,38 @@ class UIComponent:
     
     def mouseOnePressCollide(self, event):
         pass
-    
+
     def mouseOneReleaseCollide(self, event):
         pass
-    
+
     def mouseOneReleaseMiss(self, event):
         pass
+    
+    def pressedMouseOneReleaseCollide(self, event):
+        pass
+    
+    def pressedMouseOneReleaseMiss(self, event):
+        pass
 
+    def registerEvent(self, event_type, method):
+        self.events[event_type] = method
+        if self.getVisible():
+            self.addToDispatcher(event_type)
+
+    def addToDispatcher(self, event):
+        ui.event.addListener(event, self, self.events[event])
+
+    def addToDispatchers(self):
+        for event in self.events:
+            ui.event.addListener(event, self, self.events[event])
+
+    def removeFromDispatcher(self, event):
+        ui.event.removeListener(event, self)
+
+    def removeFromDispatchers(self):
+        for event in self.events:
+            ui.event.removeListener(event, self)
+    
     def addMember(self, member):
         member.setParent(self)
 
@@ -88,9 +131,21 @@ class UIComponent:
 
     def setVisible(self, val):
         self.visible = val
+        if self.visible:
+            self.addToDispatchers()
+        else:
+            self.removeFromDispatchers()
+
+    def setVisibleRecursive(self, val):
+        self.setVisible(val)
+
+        self.setMembersVisible(val)
+
+    def setMembersVisible(self, val):
+        pass
 
     def getVisible(self):
-        return self.visible
+        return self.visible and self.parent.getVisible()
 
     def getDisplaySurface(self):
         return self.display_surface
@@ -100,7 +155,7 @@ class UIComponent:
         self.calculateAbsoluteRect()
 
     def draw(self, parent_surface=None):
-        if self.visible:
+        if self.getVisible():
             self.display_surface.clear()
             self.graphics.draw(self.display_surface)
 
@@ -122,11 +177,16 @@ class FocusableUIComponent(UIComponent):
         
         self.focus = False
 
-    def mouseOneReleaseCollide(self, event):
-        self.focus = True
+        self.registerEvent(internals.MOUSEBUTTONDOWNEVENT, self.onMouseOnePress)
+        self.registerEvent(internals.MOUSEBUTTONUPEVENT, self.onMouseOneRelease)
+
+    def pressedMouseOneReleaseCollide(self, event):
+        print('In pressedMouseOneReleaseCollide')
+        self.setFocus(True)
 
     def mouseOneReleaseMiss(self, event):
-        self.focus = False
+        print('In mouseOneReleaseMiss')
+        self.setFocus(False)
     
     def hasFocus(self):
         return self.focus
@@ -151,14 +211,16 @@ class UIContainer(UIComponent):
             component.setParent(self)
             self.components.append(component)
 
-    def setVisible(self, val):
-        self.visible = val
+    def setVisibleRecursive(self, val):
+        self.setVisible(val)
 
         for component in self.components:
-            component.setVisible(val)
+            component.setVisibleRecursive(val)
+
+        self.setMembersVisible(val)
 
     def draw(self, parent_surface=None):
-        if self.visible:
+        if self.getVisible():
             self.display_surface.clear()
             self.graphics.draw(self.display_surface)
 
