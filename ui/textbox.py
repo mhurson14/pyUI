@@ -1,10 +1,11 @@
 from ui.uicomponent import *
 from ui import internals
+import ui.caret
 from pygame.locals import *
 
 class TextBox(FocusableUIComponent):
     def __init__(self, parent, surface, graphics,
-                 surface_params, graphics_params, text):
+                 surface_params, graphics_params, text, caret=None):
 
         super().__init__(parent, surface, graphics,
                          surface_params, graphics_params)
@@ -20,9 +21,9 @@ class TextBox(FocusableUIComponent):
         self.backspace = K_BACKSPACE
         self.delete = K_DELETE
 
-        self.caret_on = chr(124)
-        self.caret_off = chr(K_SPACE)
-        self.caret_pos = 0
+        self.caret = caret
+        if not self.caret:
+            self.caret = ui.caret.Caret(
 
         self.setValidKeys()
 
@@ -33,9 +34,18 @@ class TextBox(FocusableUIComponent):
             text = self.text.getText()
             newText = text[:self.caret_pos] + text[self.caret_pos + 1:]
             self.caret_pos -= 1
-            
+            newText = newText[:self.caret_pos] + self.caret_on +\
+                      newText[self.caret_pos:]
+            self.text.setText(newText)
 
-    def moveRight
+    def moveRight(self):
+        text = self.text.getText()
+        if self.caret_pos < len(text) - 1:
+            newText = text[:self.caret_pos] + text[self.caret_pos + 1:]
+            self.caret_pos += 1
+            newText = newText[:self.caret_pos] + self.caret_on +\
+                      newText[self.caret_pos:]
+            self.text.setText(newText)
 
     def setFocus(self, val):
         super().setFocus(val)
@@ -58,7 +68,10 @@ class TextBox(FocusableUIComponent):
                                   event.unicode)
             elif event.key == self.backspace:
                 self.text.setText(self.text.getText()[:-1])
-            elif event.key == self.left
+            elif event.key == self.left:
+                self.moveLeft()
+            elif event.key == self.right:
+                self.moveRight()
 
 
 

@@ -31,6 +31,10 @@ class DisplaySurface:
 
         self.surface = pygame.Surface(params.dimensions, **kwargs)
 
+    def setTopleft(self, topleft):
+        self.topleft = topleft
+        self.rect.topleft = topleft
+
     def getRect(self):
         return self.rect
 
