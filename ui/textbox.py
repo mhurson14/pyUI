@@ -14,19 +14,28 @@ class TextBox(FocusableUIComponent):
 
         self.valid_keys = {}
 
+        self.left = K_LEFT
+        self.right = K_RIGHT
+
         self.backspace = K_BACKSPACE
         self.delete = K_DELETE
 
         self.caret_on = chr(124)
         self.caret_off = chr(K_SPACE)
         self.caret_pos = 0
-        
-
-        self.text.setText(self.carat + self.text.getText())
 
         self.setValidKeys()
 
         self.registerEvent(internals.KEYDOWNEVENT, self.onKeyPress)
+
+    def moveLeft(self):
+        if self.caret_pos > 0:
+            text = self.text.getText()
+            newText = text[:self.caret_pos] + text[self.caret_pos + 1:]
+            self.caret_pos -= 1
+            
+
+    def moveRight
 
     def setFocus(self, val):
         super().setFocus(val)
@@ -49,6 +58,7 @@ class TextBox(FocusableUIComponent):
                                   event.unicode)
             elif event.key == self.backspace:
                 self.text.setText(self.text.getText()[:-1])
+            elif event.key == self.left
 
 
 
