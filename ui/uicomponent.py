@@ -92,6 +92,26 @@ class UIComponent:
     def pressedMouseOneReleaseMiss(self, event):
         pass
 
+    def registerTimer(self, timer):
+        self.timers[timer] = True
+        if self.getVisible():
+            self.addTimer(timer)
+
+    def addTimer(self, timer):
+        timer.start()
+        ui.event.addTimer(timer)
+
+    def addTimers(self):
+        for timer in self.timers:
+            self.addTimer(timer)
+
+    def removeTimer(self, timer):
+        ui.event.removeTimer(timer)
+
+    def removeTimers(self):
+        for timer in self.timers:
+            self.removeTimer(timer)
+
     def registerEvent(self, event_type, method):
         self.events[event_type] = method
         if self.getVisible():
@@ -136,8 +156,10 @@ class UIComponent:
         self.visible = val
         if self.visible:
             self.addToDispatchers()
+            self.addTimers()
         else:
             self.removeFromDispatchers()
+            self.removeTimers()
 
     def setVisibleRecursive(self, val):
         self.setVisible(val)
@@ -148,7 +170,7 @@ class UIComponent:
         pass
 
     def getVisible(self):
-        return self.visible and self.parent.getVisible()
+        return self.visible
 
     def getDisplaySurface(self):
         return self.display_surface

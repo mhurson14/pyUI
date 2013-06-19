@@ -14,5 +14,14 @@ class DefaultCaretGraphics:
         self.rect = self.image.get_rect()
         self.rect.topleft = self.topleft
 
+        self.display = True
+
+    def setDisplay(self, val):
+        self.display = val
+
+    def getDisplay(self):
+        return self.display
+
     def draw(self, display_surface, area=None):
-        display_surface.displayImage(self.image, self.rect, area)
+        if self.display:
+            display_surface.displayImage(self.image, self.rect, area)

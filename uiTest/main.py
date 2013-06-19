@@ -25,6 +25,7 @@ def main():
     freetype.init()
     pygame.display.set_mode((1280, 720))
     ui.init()
+    ui.event.start()
 
     pygame.key.set_repeat(500, 30)
 
@@ -115,4 +116,5 @@ class ClickCounter:
 
 if __name__ == "__main__":
     main()
+    ui.event.stop()
     pygame.quit()

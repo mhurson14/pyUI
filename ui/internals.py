@@ -1,8 +1,5 @@
 import ui.eventdispatcher
 
-#Event types: keys are event types, values are listeners for those event types
-event_types={}
-
 #CONSTANTS:
 UIEVENT = 25
 
