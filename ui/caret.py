@@ -17,11 +17,12 @@ class Caret(UIComponent):
 
         self.blink_delay = blink_delay
 
+        self.blink_timer = eventtimer.EventTimer(uievent.CaretBlinkEvent(self).getEvent(),
+                                            self.blink_delay)
+
         self.registerEvent(internals.CARETTIMEREVENT, self.onBlink)
 
-        blink_timer = eventtimer.EventTimer(uievent.CaretBlinkEvent(self).getEvent(),
-                                            self.blink_delay)
-        self.registerTimer(blink_timer)
+        self.registerTimer(self.blink_timer)
 
     def onBlink(self, event):
         if event.caret == self:
@@ -42,9 +43,21 @@ class Caret(UIComponent):
                 self.getRelativeRect().height // 2
             self.display_surface.setTopleft((x, y))
             self.position = position
+        self.graphics.setDisplay(True)
 
     def moveLeft(self):
         self.setLocation(self.position - 1)
 
     def moveRight(self):
         self.setLocation(self.position + 1)
+
+
+
+
+
+
+
+
+
+
+

@@ -11,6 +11,51 @@ class Text(UIComponent):
         
         self.text = text
 
+    def getEnd(self):
+        return len(self.text)
+
+    def getClickedPosition(self, coord):
+        rect = self.getAbsoluteRect()
+        if rect.collidepoint(coord):
+            rects = self.getAbsoluteCharacterRects()
+            print(rects)
+            for i in range(len(rects)):
+                char_rect = rects[i]
+                if char_rect.collidepoint(coord):
+                    if coord[0] <= char_rect.centerx:
+                        print("here")
+                        return i
+                    else:
+                        return i + 1
+            return len(rects)
+        else:
+            return None
+
+    def getAbsoluteCharacterRect(self, position):
+        rect = self.getAbsoluteRect()
+        top = rect.top
+        left = rect.left
+        metrics = self.graphics.getMetrics()
+        for i in range(position):
+            left += metrics[i][4]
+        height = rect.height
+        width = metrics[position][1] - metrics[position][0]
+        return pygame.Rect(left, top, width, height)
+
+    def getAbsoluteCharacterRects(self):
+        rect = self.getAbsoluteRect()
+        results = []
+        metrics = self.graphics.getMetrics()
+        advance = 0
+        for i in range(len(self.text)):
+            left = rect.left + advance
+            top = rect.top
+            width = metrics[i][4] - metrics[i][0]
+            height = rect.height
+            results.append(pygame.Rect(left, top, width, height))
+            advance += metrics[i][4]
+        return results
+
     def getHorizontalCoordinate(self, position):
         if position >= 0 and position <= len(self.text):
             result = self.getRelativeRect().left

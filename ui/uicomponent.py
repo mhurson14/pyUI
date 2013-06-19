@@ -54,6 +54,8 @@ class UIComponent:
             self.setState('pressed')
             self.mouseOnePressCollide(event)
             self.draw()
+        elif event.button == 1:
+            self.mouseOnePressMiss(event)
     
     def onMouseOneRelease(self, event):
         if event.button == 1:
@@ -78,6 +80,9 @@ class UIComponent:
         pass
     
     def mouseOnePressCollide(self, event):
+        pass
+
+    def mouseOnePressMiss(self, event):
         pass
 
     def mouseOneReleaseCollide(self, event):
@@ -205,12 +210,10 @@ class FocusableUIComponent(UIComponent):
         self.registerEvent(internals.MOUSEBUTTONDOWNEVENT, self.onMouseOnePress)
         self.registerEvent(internals.MOUSEBUTTONUPEVENT, self.onMouseOneRelease)
 
-    def pressedMouseOneReleaseCollide(self, event):
-        print('In pressedMouseOneReleaseCollide')
+    def mouseOnePressCollide(self, event):
         self.setFocus(True)
 
-    def mouseOneReleaseMiss(self, event):
-        print('In mouseOneReleaseMiss')
+    def mouseOnePressMiss(self, event):
         self.setFocus(False)
     
     def hasFocus(self):

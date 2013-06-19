@@ -21,6 +21,9 @@ class TextBox(FocusableUIComponent):
         self.backspace = K_BACKSPACE
         self.delete = K_DELETE
 
+        self.home = K_HOME
+        self.end = K_END
+
         self.caret = caret
         if not self.caret:
             tl = (self.text.getHorizontalCoordinate(0),
@@ -37,6 +40,15 @@ class TextBox(FocusableUIComponent):
         self.setValidKeys()
 
         self.registerEvent(internals.KEYDOWNEVENT, self.onKeyPress)
+
+    def mouseOnePressCollide(self, event):
+        super().mouseOnePressCollide(event)
+        position = self.text.getClickedPosition(event.pos)
+        print(position)
+        if position == None:
+            position = self.text.getEnd()
+        print(position)
+        self.caret.setLocation(position)
 
     def setFocus(self, val):
         super().setFocus(val)
@@ -63,10 +75,16 @@ class TextBox(FocusableUIComponent):
             elif event.key == self.backspace:
                 self.text.deleteCharacter(self.caret.getPosition() - 1)
                 self.caret.moveLeft()
+            elif event.key == self.delete:
+                self.text.deleteCharacter(self.caret.getPosition())
             elif event.key == self.left:
                 self.caret.moveLeft()
             elif event.key == self.right:
                 self.caret.moveRight()
+            elif event.key == self.home:
+                self.caret.setLocation(0)
+            elif event.key == self.end:
+                self.caret.setLocation(len(self.text))
 
 
 
