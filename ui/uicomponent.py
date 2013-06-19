@@ -129,6 +129,9 @@ class UIComponent:
             self.calculateAbsoluteRect()
             return self.absolute_rect
 
+    def getRelativeRect(self):
+        return self.display_surface.getRect()
+
     def setVisible(self, val):
         self.visible = val
         if self.visible:

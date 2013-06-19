@@ -1,6 +1,8 @@
 
 import ui.button
 import ui.buttongraphics
+import ui.caret
+import ui.caretgraphics
 import ui.displaysurface
 import ui.event
 import ui.eventdispatcher
@@ -11,6 +13,8 @@ import ui.panel
 import ui.panelgraphics
 import ui.parameters
 import ui.text
+import ui.textbox
+import ui.textboxgraphics
 import ui.textgraphics
 import ui.uicomponent
 import ui.uievent

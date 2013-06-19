@@ -35,5 +35,8 @@ class DefaultTextGraphics:
         self.rect.topleft = self.topleft
         self.dimensions = self.rect.size
 
+    def getMetrics(self):
+        return self.font.metrics(self.text)
+
     def draw(self, display_surface, area=None):
         display_surface.displayImage(self.image, self.rect, area)

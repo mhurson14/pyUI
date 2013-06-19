@@ -1,4 +1,5 @@
 import ui
+import pygame
 
 class DefaultCaretGraphics:
     def __init__(self, params):

@@ -1,6 +1,6 @@
+import ui
 from ui.uicomponent import *
 from ui import internals
-import ui.caret
 from pygame.locals import *
 
 class TextBox(FocusableUIComponent):
@@ -23,36 +23,29 @@ class TextBox(FocusableUIComponent):
 
         self.caret = caret
         if not self.caret:
-            self.caret = ui.caret.Caret(
+            tl = (self.text.getHorizontalCoordinate(0),
+                  self.display_surface.getRect().height // 2 - 10)
+            self.caret = ui.caret.Caret(None, ui.displaysurface.DisplaySurface,
+                                        ui.caretgraphics.DefaultCaretGraphics,
+                                        ui.parameters.DisplaySurfaceParameters(\
+                                            dimensions=(1, 20), topleft=tl,
+                                            flags=SRCALPHA),
+                                        ui.parameters.DefaultCaretGraphicsParameters(),
+                                        self.text)
+        self.addMember(self.caret)
 
         self.setValidKeys()
 
         self.registerEvent(internals.KEYDOWNEVENT, self.onKeyPress)
 
-    def moveLeft(self):
-        if self.caret_pos > 0:
-            text = self.text.getText()
-            newText = text[:self.caret_pos] + text[self.caret_pos + 1:]
-            self.caret_pos -= 1
-            newText = newText[:self.caret_pos] + self.caret_on +\
-                      newText[self.caret_pos:]
-            self.text.setText(newText)
-
-    def moveRight(self):
-        text = self.text.getText()
-        if self.caret_pos < len(text) - 1:
-            newText = text[:self.caret_pos] + text[self.caret_pos + 1:]
-            self.caret_pos += 1
-            newText = newText[:self.caret_pos] + self.caret_on +\
-                      newText[self.caret_pos:]
-            self.text.setText(newText)
-
     def setFocus(self, val):
         super().setFocus(val)
         if val:
             self.addToDispatcher(internals.KEYDOWNEVENT)
+            self.caret.setVisibleRecursive(True)
         else:
             self.removeFromDispatcher(internals.KEYDOWNEVENT)
+            self.caret.setVisibleRecursive(False)
 
     def setValidKeys(self):
         for i in range(32, 127):
@@ -60,18 +53,20 @@ class TextBox(FocusableUIComponent):
 
     def drawMembers(self):
         self.text.draw()
+        self.caret.draw()
 
     def onKeyPress(self, event):
         if self.hasFocus():
             if event.unicode in self.valid_keys:
-                self.text.setText(self.text.getText() +
-                                  event.unicode)
+                self.text.insertText(event.unicode, self.caret.getPosition())
+                self.caret.moveRight()
             elif event.key == self.backspace:
-                self.text.setText(self.text.getText()[:-1])
+                self.text.deleteCharacter(self.caret.getPosition() - 1)
+                self.caret.moveLeft()
             elif event.key == self.left:
-                self.moveLeft()
+                self.caret.moveLeft()
             elif event.key == self.right:
-                self.moveRight()
+                self.caret.moveRight()
 
 
 

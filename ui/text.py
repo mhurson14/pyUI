@@ -11,6 +11,31 @@ class Text(UIComponent):
         
         self.text = text
 
+    def getHorizontalCoordinate(self, position):
+        if position >= 0 and position <= len(self.text):
+            result = self.getRelativeRect().left
+            if position > 0:
+                metrics = self.graphics.getMetrics()
+                if position <= len(metrics):
+                    result += sum([metric[4] for metric in metrics[:position]])
+            return result
+
+    def insertText(self, text, index):
+        newText = self.text[:index] + text + self.text[index:]
+        self.setText(newText)
+
+    def deleteText(self, start, end):
+        if start <= end and start >= 0 and end < len(self.text):
+            newText = self.text[:start] + self.text[end + 1:]
+            self.setText(newText)
+        else:
+            raise Exception('Invalid indices')
+
+    def deleteCharacter(self, index):
+        if index >= 0:
+            newText = self.text[:index] + self.text[index + 1:]
+            self.setText(newText)
+
     def setText(self, text):
         self.text = text
 
@@ -29,3 +54,20 @@ class Text(UIComponent):
 
     def getText(self):
         return self.text
+
+    def __len__(self):
+        return len(self.text)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

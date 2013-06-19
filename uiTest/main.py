@@ -26,6 +26,8 @@ def main():
     pygame.display.set_mode((1280, 720))
     ui.init()
 
+    pygame.key.set_repeat(500, 30)
+
     screen = pygame.display.get_surface()
     area = screen.get_rect()
 
