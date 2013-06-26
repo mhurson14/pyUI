@@ -3,7 +3,7 @@ import ui
 from pygame.locals import *
 
 class DefaultTextBox(ui.textbox.TextBox):
-    def __init__(self, topleft=(0,0), dimensions=(150,30),
+    def __init__(self, topleft=(0,0), dimensions=(150,35),
                  background_color=(255,255,255,255),
                  text='', font_size=20, font_type=None,
                  font_color=(0, 0, 0, 255),
@@ -17,7 +17,7 @@ class DefaultTextBox(ui.textbox.TextBox):
         text_rect.left = 3
         text_rect.centery = box_rect.centery
 
-        text_object = ui.text.Text(None, ui.displaysurface.DisplaySurface,
+        text_object = ui.text.SelectableText(None, ui.displaysurface.DisplaySurface,
                                ui.textgraphics.DefaultTextGraphics,
                                ui.parameters.DisplaySurfaceParameters(\
                                    dimensions=text_size,

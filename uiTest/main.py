@@ -84,10 +84,6 @@ def main():
             if event.type == KEYDOWN and event.key == K_v:
                 screen.blit(background, area)
                 panel.setVisibleRecursive(not panel.getVisible())
-            if event.type == KEYDOWN and event.key == K_p:
-                for event in ui.internals.event_types:
-                    print(ui.internals.event_types[event])
-                print('\n\n\n')
 
         screen.blit(background, area)
         menu.draw()

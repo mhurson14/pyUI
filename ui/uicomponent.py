@@ -48,6 +48,11 @@ class UIComponent:
                 self.mouseMoveMiss(event)
             if changed:
                 self.draw()
+        else:
+            if self.absolute_rect.collidepoint(event.pos):
+                self.pressedMouseMoveCollide(event)
+            else:
+                self.pressedMouseMoveMiss(event)
     
     def onMouseOnePress(self, event):
         if event.button == 1 and self.absolute_rect.collidepoint(event.pos):
@@ -77,6 +82,12 @@ class UIComponent:
         pass
     
     def mouseMoveMiss(self, event):
+        pass
+
+    def pressedMouseMoveCollide(self, event):
+        pass
+
+    def pressedMouseMoveMiss(self, event):
         pass
     
     def mouseOnePressCollide(self, event):

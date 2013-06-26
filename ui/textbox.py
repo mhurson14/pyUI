@@ -37,18 +37,34 @@ class TextBox(FocusableUIComponent):
                                         self.text)
         self.addMember(self.caret)
 
+        self.selecter = ui.uiimplementers.TextSelecter(self.text, self.caret)
+
         self.setValidKeys()
 
         self.registerEvent(internals.KEYDOWNEVENT, self.onKeyPress)
+        self.registerEvent(internals.MOUSEMOTIONEVENT, self.onMouseMove)
 
     def mouseOnePressCollide(self, event):
         super().mouseOnePressCollide(event)
         position = self.text.getClickedPosition(event.pos)
-        print(position)
+        #print(position)
         if position == None:
             position = self.text.getEnd()
-        print(position)
+        #print(position)
         self.caret.setLocation(position)
+        self.selecter.mouseOnePressCollide(event)
+
+    def pressedMouseMoveCollide(self, event):
+        super().pressedMouseMoveCollide(event)
+        self.selecter.pressedMouseMoveCollide(event)
+
+    def pressedMouseMoveMiss(self, event):
+        super().pressedMouseMoveMiss(event)
+        self.selecter.pressedMouseMoveMiss(event)
+
+    def pressedMouseOneReleaseCollide(self, event):
+        super().pressedMouseOneReleaseCollide(event)
+        self.selecter.pressedMouseOneReleaseCollide(event)
 
     def setFocus(self, val):
         super().setFocus(val)
@@ -85,6 +101,7 @@ class TextBox(FocusableUIComponent):
                 self.caret.setLocation(0)
             elif event.key == self.end:
                 self.caret.setLocation(len(self.text))
+            self.selecter.onKeyPress(event)
 
 
 

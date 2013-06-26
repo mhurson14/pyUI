@@ -18,12 +18,11 @@ class Text(UIComponent):
         rect = self.getAbsoluteRect()
         if rect.collidepoint(coord):
             rects = self.getAbsoluteCharacterRects()
-            print(rects)
+            #print(rects)
             for i in range(len(rects)):
                 char_rect = rects[i]
                 if char_rect.collidepoint(coord):
                     if coord[0] <= char_rect.centerx:
-                        print("here")
                         return i
                     else:
                         return i + 1
@@ -39,8 +38,9 @@ class Text(UIComponent):
         for i in range(position):
             left += metrics[i][4]
         height = rect.height
-        width = metrics[position][1] - metrics[position][0]
-        return pygame.Rect(left, top, width, height)
+        width = metrics[position][4] - metrics[position][0]
+        result = pygame.Rect(left, top, width + 1, height)
+        return result
 
     def getAbsoluteCharacterRects(self):
         rect = self.getAbsoluteRect()
@@ -52,7 +52,8 @@ class Text(UIComponent):
             top = rect.top
             width = metrics[i][4] - metrics[i][0]
             height = rect.height
-            results.append(pygame.Rect(left, top, width, height))
+            result = pygame.Rect(left, top, width + 1, height)
+            results.append(result)
             advance += metrics[i][4]
         return results
 
@@ -64,6 +65,9 @@ class Text(UIComponent):
                 if position <= len(metrics):
                     result += sum([metric[4] for metric in metrics[:position]])
             return result
+
+    def getAbsoluteHorizontalCoordinate(self, position):
+        return self.getAbsoluteRect().left + self.getHorizontalCoordinate(position)
 
     def insertText(self, text, index):
         newText = self.text[:index] + text + self.text[index:]
@@ -102,6 +106,22 @@ class Text(UIComponent):
 
     def __len__(self):
         return len(self.text)
+
+class SelectableText(Text):
+    def __init__(self, parent, surface, graphics,
+                 surface_params, graphics_params, text=''):
+
+        super().__init__(parent, surface, graphics,
+                         surface_params, graphics_params)
+
+        self.selection_start = 0
+        self.selection_end = 0
+
+    def setSelected(self, start, end):
+        self.selection_start = start
+        self.selection_end = end
+
+        self.graphics.setSelected(start, end)
 
 
 

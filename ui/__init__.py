@@ -23,6 +23,7 @@ import ui.textgraphics
 import ui.uicomponent
 import ui.uievent
 import ui.uiexceptions
+import ui.uiimplementers
 import ui.utils
 from ui.initialize import init
 
