@@ -60,7 +60,7 @@ class DefaultTextGraphics:
         if len(selected) > 0:
             self.image_selected = self.font.render(selected, True,
                                                    (255, 255, 255, 255),
-                                                   (150, 200, 150, 255))
+                                                   (100, 200, 100, 255))
             self.rect_selected = self.image_selected.get_rect()
             self.rect_selected.top = self.topleft[1]
             self.rect_selected.left = self.topleft[0]

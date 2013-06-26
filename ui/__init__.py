@@ -1,3 +1,8 @@
+'''
+@newfield pre: Pre Condition, Pre Conditions
+
+@newfield post: Post Condition, Post Conditions
+'''
 
 import ui.button
 import ui.buttongraphics

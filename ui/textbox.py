@@ -37,29 +37,28 @@ class TextBox(FocusableUIComponent):
                                         self.text)
         self.addMember(self.caret)
 
-        self.selecter = ui.uiimplementers.TextSelecter(self.text, self.caret)
-
         self.setValidKeys()
+
+        self.caret_handler = ui.uiimplementers.CaretHandler(self.text, self.caret,
+                                                            self.valid_keys)
+        self.selecter = ui.uiimplementers.TextSelecter(self.text, self.caret)
 
         self.registerEvent(internals.KEYDOWNEVENT, self.onKeyPress)
         self.registerEvent(internals.MOUSEMOTIONEVENT, self.onMouseMove)
 
     def mouseOnePressCollide(self, event):
         super().mouseOnePressCollide(event)
-        position = self.text.getClickedPosition(event.pos)
-        #print(position)
-        if position == None:
-            position = self.text.getEnd()
-        #print(position)
-        self.caret.setLocation(position)
+        self.caret_handler.mouseOnePressCollide(event)
         self.selecter.mouseOnePressCollide(event)
 
     def pressedMouseMoveCollide(self, event):
         super().pressedMouseMoveCollide(event)
+        self.caret_handler.pressedMouseMoveCollide(event)
         self.selecter.pressedMouseMoveCollide(event)
 
     def pressedMouseMoveMiss(self, event):
         super().pressedMouseMoveMiss(event)
+        self.caret_handler.pressedMouseMoveMiss(event)
         self.selecter.pressedMouseMoveMiss(event)
 
     def pressedMouseOneReleaseCollide(self, event):
@@ -87,20 +86,22 @@ class TextBox(FocusableUIComponent):
         if self.hasFocus():
             if event.unicode in self.valid_keys:
                 self.text.insertText(event.unicode, self.caret.getPosition())
-                self.caret.moveRight()
             elif event.key == self.backspace:
-                self.text.deleteCharacter(self.caret.getPosition() - 1)
-                self.caret.moveLeft()
+                start = self.text.getSelectionStart()
+                end = self.text.getSelectionEnd()
+                if start == end:
+                    self.text.deleteCharacter(self.caret.getPosition() - 1)
+                else:
+                    self.text.deleteText(start, end - 1)
             elif event.key == self.delete:
-                self.text.deleteCharacter(self.caret.getPosition())
-            elif event.key == self.left:
-                self.caret.moveLeft()
-            elif event.key == self.right:
-                self.caret.moveRight()
-            elif event.key == self.home:
-                self.caret.setLocation(0)
-            elif event.key == self.end:
-                self.caret.setLocation(len(self.text))
+                start = self.text.getSelectionStart()
+                end = self.text.getSelectionEnd()
+                if start == end:
+                    self.text.deleteCharacter(self.caret.getPosition())
+                else:
+                    self.text.deleteText(start, end - 1)
+
+            self.caret_handler.onKeyPress(event)
             self.selecter.onKeyPress(event)
 
 

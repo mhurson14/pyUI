@@ -3,7 +3,30 @@ import ui
 from ui import internals
 
 class UIComponent:
+    '''
+    UIComponent is the base-class of all components.  It contains basic functionality
+    useful to all components.
+    '''
     def __init__(self, parent, surface, graphics, surface_params, graphics_params):
+        '''
+        The constructor for UIComponent
+
+        @post: This component's display_surface attribute references an instance
+        of type surface initialized with surface_params.
+        @post: This component's graphics attribute references an instance of type
+        graphics initialized with graphics_params.
+        
+        @param parent: The parent component which contains this component.  This
+        should be an instance of UIComponent or any of its sub-classes.  All
+        components should have a parent with the exception of ui.screen.Screen.
+        If you wish to draw a component directly to the screen, then its parent
+        should be set to ui.screen.Screen.  If a component is going to be added
+        to a UIContainer using either UIContainer.addComponent or
+        UIContainer.addComponents, then parent may be set to None, as either of
+        those methods will set the parent attribute of the added components.
+        @type parent: L{ui.uicomponent.UIComponent}
+        @param surface: 
+        '''
 
         self.parent = parent
 

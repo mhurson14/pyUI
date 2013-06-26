@@ -74,7 +74,7 @@ class Text(UIComponent):
         self.setText(newText)
 
     def deleteText(self, start, end):
-        if start <= end and start >= 0 and end < len(self.text):
+        if start <= end and start >= 0 and end <= len(self.text):
             newText = self.text[:start] + self.text[end + 1:]
             self.setText(newText)
         else:
@@ -122,6 +122,12 @@ class SelectableText(Text):
         self.selection_end = end
 
         self.graphics.setSelected(start, end)
+
+    def getSelectionStart(self):
+        return self.selection_start
+
+    def getSelectionEnd(self):
+        return self.selection_end
 
 
 

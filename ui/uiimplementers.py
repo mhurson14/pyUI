@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import ui
 
 class UIImplementer:
     def __init__(self):
@@ -62,9 +63,7 @@ class TextSelecter (UIImplementer):
             self.text.setSelected(self.end, self.start)
         else:
             self.text.setSelected(self.start, self.end)
-
     
-
     def pressedMouseMoveCollide(self, event):
         position = self.text.getClickedPosition(event.pos)
         if position != None:
@@ -75,6 +74,7 @@ class TextSelecter (UIImplementer):
                 self.end = 0
             else:
                 self.end = self.text.getEnd()
+        self.caret.setLocation(self.end)
         self.setSelected()
 
     def pressedMouseMoveMiss(self, event):
@@ -83,22 +83,17 @@ class TextSelecter (UIImplementer):
             self.end = 0
         else:
             self.end = self.text.getEnd()
+        self.caret.setLocation(self.end)
         self.setSelected()
     
     def mouseOnePressCollide(self, event):
         keys = pygame.key.get_pressed()
         if keys[K_RSHIFT] or keys[K_LSHIFT]:
-            pass
+            self.end = self.caret.getPosition()
         else:
-            position = self.text.getClickedPosition(event.pos)
-            if position != None:
-                self.start = position
-                self.end = position
-            else:
-                end = self.text.getEnd()
-                self.start = end
-                self.end = end
-            self.setSelected()
+            self.start = self.caret.getPosition()
+            self.end = self.caret.getPosition()
+        self.setSelected()
     
     def pressedMouseOneReleaseCollide(self, event):
         position = self.text.getClickedPosition(event.pos)
@@ -116,6 +111,10 @@ class TextSelecter (UIImplementer):
             else:
                 self.start = self.caret.getPosition()
                 self.end = self.caret.getPosition()
+        elif keys[K_RCTRL] or keys[K_LCTRL]:
+            if event.key == K_a:
+                self.start = 0
+                self.end = self.caret.getPosition()
         else:
             self.start = self.caret.getPosition()
             self.end = self.caret.getPosition()
@@ -127,3 +126,93 @@ class TextSelecter (UIImplementer):
 
     def onSetFocus(self, val):
         pass
+
+class CaretHandler(UIImplementer):
+    def __init__(self, text, caret, valid_keys):
+
+        super().__init__()
+
+        self.text = text
+
+        self.caret = caret
+
+        self.valid_keys = valid_keys
+
+        self.left = K_LEFT
+        self.right = K_RIGHT
+
+        self.backspace = K_BACKSPACE
+        self.delete = K_DELETE
+
+        self.home = K_HOME
+        self.end = K_END
+
+    def mouseOnePressCollide(self, event):
+        position = self.text.getClickedPosition(event.pos)
+        if position == None:
+            position = self.text.getEnd()
+        self.caret.setLocation(position)
+
+    def onKeyPress(self, event):
+        if event.unicode in self.valid_keys:
+            self.caret.moveRight()
+        elif event.key == self.left:
+            self.caret.moveLeft()
+        elif event.key == self.right:
+            self.caret.moveRight()
+        elif event.key == self.home:
+            self.caret.setLocation(0)
+        elif event.key == self.end:
+            self.caret.setLocation(len(self.text))
+
+        if type(self.text) == ui.text.SelectableText:
+            if event.key == self.backspace:
+                if self.text.getSelectionStart() != self.text.getSelectionEnd():
+                    self.caret.setLocation(self.text.getSelectionStart())
+                else:
+                    self.caret.setLocation(self.text.getSelectionStart() - 1)
+            if event.key == self.delete:
+                self.caret.setLocation(self.text.getSelectionStart())
+
+        keys = pygame.key.get_pressed()
+        if keys[K_RCTRL] or keys[K_LCTRL]:
+            if event.key == K_a:
+                self.caret.setLocation(self.text.getEnd())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
