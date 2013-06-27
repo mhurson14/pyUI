@@ -1,13 +1,13 @@
 import ui
-from ui import internals
 from ui.eventdispatcher import EventDispatcher
 
-def init():
+def init(ui_event_id=25):
     print("Initializing...")
-    ui.event.createDispatcher(internals.MOUSEMOTIONEVENT)
-    ui.event.createDispatcher(internals.MOUSEBUTTONDOWNEVENT)
-    ui.event.createDispatcher(internals.MOUSEBUTTONUPEVENT)
-    ui.event.createDispatcher(internals.BUTTONPRESSEVENT)
-    ui.event.createDispatcher(internals.KEYDOWNEVENT)
-    ui.event.createDispatcher(internals.CARETTIMEREVENT)
+    ui.internals.setUIEvent(ui_event_id)
+    ui.event.createDispatcher(ui.internals.MOUSEMOTIONEVENT)
+    ui.event.createDispatcher(ui.internals.MOUSEBUTTONDOWNEVENT)
+    ui.event.createDispatcher(ui.internals.MOUSEBUTTONUPEVENT)
+    ui.event.createDispatcher(ui.internals.BUTTONPRESSEVENT)
+    ui.event.createDispatcher(ui.internals.KEYDOWNEVENT)
+    ui.event.createDispatcher(ui.internals.CARETTIMEREVENT)
     print("Done!")

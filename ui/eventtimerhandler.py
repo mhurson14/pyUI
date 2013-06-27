@@ -1,5 +1,5 @@
 import pygame
-import threading
+import threading, time
 from ui.eventtimercontainer import EventTimerContainer
 
 class EventTimerHandler:
@@ -15,6 +15,15 @@ class EventTimerHandler:
         self.clock = pygame.time.Clock()
 
         self.frame_rate = 60
+
+        self.sleep_time = 0
+
+        self.lock = threading.Lock()
+
+    def setSleepTime(self, time):
+        self.lock.acquire()
+        self.sleep_time = time
+        self.lock.release()
 
     def setFrameRate(self, rate):
         self.frame_rate = rate
@@ -34,6 +43,10 @@ class EventTimerHandler:
         while self.running:
             self.clock.tick(self.frame_rate)
             self.timers.processTimers()
+
+            if self.sleep_time != 0:
+                time.sleep(self.sleep_time)
+                self.setSleepTime(0)
 
     def addTimer(self, timer):
         self.timers.addTimer(timer)

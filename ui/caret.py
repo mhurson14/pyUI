@@ -1,5 +1,5 @@
+import ui
 from ui.uicomponent import *
-from ui import internals
 from ui import eventtimer
 from ui import uievent
 
@@ -20,7 +20,7 @@ class Caret(UIComponent):
         self.blink_timer = eventtimer.EventTimer(uievent.CaretBlinkEvent(self).getEvent(),
                                             self.blink_delay)
 
-        self.registerEvent(internals.CARETTIMEREVENT, self.onBlink)
+        self.registerEvent(ui.internals.CARETTIMEREVENT, self.onBlink)
 
         self.registerTimer(self.blink_timer)
 

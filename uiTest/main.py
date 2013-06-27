@@ -1,4 +1,4 @@
-import pygame, loadimage
+import pygame, loadimage, time
 from pygame import freetype
 from pygame.locals import *
 import ui
@@ -24,7 +24,7 @@ def main():
     pygame.init()
     freetype.init()
     pygame.display.set_mode((1280, 720))
-    ui.init()
+    ui.init(30)
     ui.event.start()
 
     pygame.key.set_repeat(500, 30)
@@ -46,8 +46,6 @@ def main():
                          border_width = 10)
     panel.setVisible(True)
 
-    menu.addComponents([panel])
-
     btn = DefaultButton(topleft = (20, 20), dimensions = (100, 40),
                         color = (100, 128, 160), text_in='Press',
                         font_type='/usr/share/fonts/truetype/freefont/FreeSans.ttf')
@@ -57,6 +55,7 @@ def main():
                           font_type='/usr/share/fonts/truetype/freefont/FreeSans.ttf',)
                           
     tbox.setVisible(True)
+    menu.addComponents([panel])
     panel.addComponents([btn, tbox])
 
     panel1 = DefaultPanel(parent = ui_screen, topleft = (area.width - 300, 0),
@@ -90,6 +89,9 @@ def main():
         panel1.draw()
 
         pygame.display.flip()
+
+        if not pygame.mouse.get_focused():
+            time.sleep(.5)
 
 class ClickCounter:
     def __init__(self, label):

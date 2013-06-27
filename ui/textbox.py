@@ -1,6 +1,5 @@
 import ui
 from ui.uicomponent import *
-from ui import internals
 from pygame.locals import *
 
 class TextBox(FocusableUIComponent):
@@ -43,8 +42,8 @@ class TextBox(FocusableUIComponent):
                                                             self.valid_keys)
         self.selecter = ui.uiimplementers.TextSelecter(self.text, self.caret)
 
-        self.registerEvent(internals.KEYDOWNEVENT, self.onKeyPress)
-        self.registerEvent(internals.MOUSEMOTIONEVENT, self.onMouseMove)
+        self.registerEvent(ui.internals.KEYDOWNEVENT, self.onKeyPress)
+        self.registerEvent(ui.internals.MOUSEMOTIONEVENT, self.onMouseMove)
 
     def mouseOnePressCollide(self, event):
         super().mouseOnePressCollide(event)
@@ -68,10 +67,10 @@ class TextBox(FocusableUIComponent):
     def setFocus(self, val):
         super().setFocus(val)
         if val:
-            self.addToDispatcher(internals.KEYDOWNEVENT)
+            self.addToDispatcher(ui.internals.KEYDOWNEVENT)
             self.caret.setVisibleRecursive(True)
         else:
-            self.removeFromDispatcher(internals.KEYDOWNEVENT)
+            self.removeFromDispatcher(ui.internals.KEYDOWNEVENT)
             self.caret.setVisibleRecursive(False)
 
     def setValidKeys(self):

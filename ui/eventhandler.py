@@ -1,6 +1,7 @@
 import pygame
+import time
+import ui
 from pygame.locals import *
-from ui.internals import *
 from ui import eventdispatcher
 from ui.eventtimerhandler import *
 
@@ -20,7 +21,8 @@ class EventHandler:
         self.timer_handler.stop()
     
     def process(self, event):
-        if event.type == UIEVENT and event.ui_type in self.event_types:
+        #print(UIEVENT)
+        if event.type == ui.internals.UIEVENT and event.ui_type in self.event_types:
             self.event_types[event.ui_type].notify(event)
         elif event.type in self.event_types:
             self.event_types[event.type].notify(event)
@@ -43,6 +45,9 @@ class EventHandler:
 
     def setTimerUpdateRate(self, rate):
         self.timer_handler.setFrameRate(rate)
+
+    def sleepTimers(self, time_in):
+        self.timer_handler.setSleepTime(time_in)
 
 
 

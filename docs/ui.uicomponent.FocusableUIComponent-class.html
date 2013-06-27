@@ -211,6 +211,42 @@
     </td>
   </tr>
 </table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="ui.uicomponent.UIComponent-class.html">UIComponent</a></code></b>:
+      <code><a href="ui.uicomponent.UIComponent-class.html#absolute_rect">absolute_rect</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#display_surface">display_surface</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#events">events</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#graphics">graphics</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#graphics_params">graphics_params</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#graphics_type">graphics_type</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#parent">parent</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#state">state</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#surface_params">surface_params</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#surface_type">surface_type</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#timers">timers</a></code>,
+      <code><a href="ui.uicomponent.UIComponent-class.html#visible">visible</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
 <!-- ==================== METHOD DETAILS ==================== -->
 <a name="section-MethodDetails"></a>
 <table class="details" border="1" cellpadding="3"
@@ -255,14 +291,36 @@
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>parent</code></strong> - The parent component which contains this component.  This should 
           be an instance of UIComponent or any of its sub-classes.  All 
-          components should have a parent with the exception of 
-          ui.screen.Screen. If you wish to draw a component directly to the
-          screen, then its parent should be set to ui.screen.Screen.  If a 
-          component is going to be added to a UIContainer using either 
-          UIContainer.addComponent or UIContainer.addComponents, then 
+          components should have a parent with the exception of <a 
+          href="ui.screen.Screen-class.html" 
+          class="link">ui.screen.Screen</a>. If you wish to draw a 
+          component directly to the screen, then its parent should be set 
+          to <a href="ui.screen.Screen-class.html" 
+          class="link">ui.screen.Screen</a>.  If a component is going to be
+          added to a UIContainer using either <a 
+          href="ui.uicomponent.UIContainer-class.html#addComponent" 
+          class="link">ui.uicomponent.UIContainer.addComponent</a> or <a 
+          href="ui.uicomponent.UIContainer-class.html#addComponents" 
+          class="link">ui.uicomponent.UIContainer.addComponents</a>, then 
           parent may be set to None, as either of those methods will set 
           the parent attribute of the added components.</li>
-        <li><strong class="pname"><code>surface</code></strong></li>
+        <li><strong class="pname"><code>surface</code></strong> - The type of display surface to use when displaying this 
+          component.  This should be <a 
+          href="ui.displaysurface.DisplaySurface-class.html" 
+          class="link">ui.displaysurface.DisplaySurface</a> or one of its 
+          subclasses.</li>
+        <li><strong class="pname"><code>graphics</code></strong> - The type of graphics object to control how the component 
+          displays.  This should be a subclass of <a 
+          href="ui.uigraphics.UIGraphics-class.html" 
+          class="link">ui.uigraphics.UIGraphics</a>.</li>
+        <li><strong class="pname"><code>surface_params</code></strong> - The parameters that will be used to instantiate the display 
+          surface for this component.  This should be a subclass of <a 
+          href="ui.parameters.Parameters-class.html" 
+          class="link">ui.parameters.Parameters</a>.</li>
+        <li><strong class="pname"><code>graphics_params</code></strong> - The parameters that will be used to instantiate the graphics 
+          object for this component. This should be a subclass of <a 
+          href="ui.parameters.Parameters-class.html" 
+          class="link">ui.parameters.Parameters</a>.</li>
     </ul></dd>
     <dt>Overrides:
         <a href="ui.uicomponent.UIComponent-class.html#__init__">UIComponent.__init__</a>
@@ -344,7 +402,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Wed Jun 26 15:10:53 2013
+    Generated by Epydoc 3.0.1 on Wed Jun 26 20:53:07 2013
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

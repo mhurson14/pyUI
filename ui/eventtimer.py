@@ -13,8 +13,6 @@ class EventTimer:
 
         self.lock = threading.Lock()
 
-        self.count = 0
-
     def start(self):
         self.lock.acquire()
         self.last_trigger = time.time()

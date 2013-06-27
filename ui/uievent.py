@@ -1,10 +1,11 @@
 import pygame.event
-import ui.internals
+import ui
 
 class UIEvent():
     def __init__(self, typeIn, **kwargs):
         kwargs['ui_type'] = typeIn
-        self.pygame_event = pygame.event.Event(int(typeIn), **kwargs)
+        #self.pygame_event = pygame.event.Event(int(typeIn), **kwargs)
+        self.pygame_event = pygame.event.Event(ui.internals.UIEVENT, **kwargs)
 
     def getEvent(self):
         return self.pygame_event
