@@ -1,4 +1,4 @@
-import ui
+import ui, utils
 from ui.uicomponent import *
 from pygame.locals import *
 
@@ -83,22 +83,33 @@ class TextBox(FocusableUIComponent):
 
     def onKeyPress(self, event):
         if self.hasFocus():
+            
+            start = self.text.getSelectionStart()
+            end = self.text.getSelectionEnd()
+            keys = pygame.key.get_pressed()
+            
             if event.unicode in self.valid_keys:
+                if start != end:
+                        self.text.deleteText(start, end - 1)
                 self.text.insertText(event.unicode, self.caret.getPosition())
             elif event.key == self.backspace:
-                start = self.text.getSelectionStart()
-                end = self.text.getSelectionEnd()
                 if start == end:
                     self.text.deleteCharacter(self.caret.getPosition() - 1)
                 else:
                     self.text.deleteText(start, end - 1)
             elif event.key == self.delete:
-                start = self.text.getSelectionStart()
-                end = self.text.getSelectionEnd()
                 if start == end:
                     self.text.deleteCharacter(self.caret.getPosition())
                 else:
                     self.text.deleteText(start, end - 1)
+            
+            if keys[K_LCTRL] or keys[K_RCTRL]:
+                if event.key == K_c and start != end:
+                    utils.pyperclip.copy(self.text.getText()[start:end])
+                elif event.key == K_v:
+                    if start != end:
+                        self.text.deleteText(start, end - 1)
+                    self.text.insertText(utils.pyperclip.paste(), start)
 
             self.caret_handler.onKeyPress(event)
             self.selecter.onKeyPress(event)

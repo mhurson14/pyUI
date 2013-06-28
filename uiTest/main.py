@@ -80,9 +80,9 @@ def main():
             if event.type == QUIT or\
             (event.type == KEYDOWN and event.key == K_ESCAPE):
                 return
-            if event.type == KEYDOWN and event.key == K_v:
+            '''if event.type == KEYDOWN and event.key == K_v:
                 screen.blit(background, area)
-                panel.setVisibleRecursive(not panel.getVisible())
+                panel.setVisibleRecursive(not panel.getVisible())'''
 
         screen.blit(background, area)
         menu.draw()

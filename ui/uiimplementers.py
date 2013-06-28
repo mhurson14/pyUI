@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-import ui
+import ui, utils
 
 class UIImplementer:
     def __init__(self):
@@ -56,7 +56,8 @@ class TextSelecter (UIImplementer):
         self.start = 0
         self.end = 0
 
-        self.keys = {K_LEFT:True, K_RIGHT:True, K_HOME:True, K_END:True}
+        self.keys = {K_LEFT:True, K_RIGHT:True, K_HOME:True, K_END:True,
+                     K_LSHIFT:True, K_RSHIFT:True}
 
     def setSelected(self):
         if self.start > self.end:
@@ -114,6 +115,9 @@ class TextSelecter (UIImplementer):
         elif keys[K_RCTRL] or keys[K_LCTRL]:
             if event.key == K_a:
                 self.start = 0
+                self.end = self.caret.getPosition()
+            elif event.key == K_v:
+                self.start = self.caret.getPosition()
                 self.end = self.caret.getPosition()
         else:
             self.start = self.caret.getPosition()
@@ -178,6 +182,14 @@ class CaretHandler(UIImplementer):
         if keys[K_RCTRL] or keys[K_LCTRL]:
             if event.key == K_a:
                 self.caret.setLocation(self.text.getEnd())
+            elif event.key == K_v:
+                if type(self.text) == ui.text.SelectableText:
+                    start = self.text.getSelectionStart()
+                else:
+                    start = self.caret.getPosition()
+                    
+                length = len(utils.pyperclip.paste())
+                self.caret.setLocation(start + length)
 
 
 
