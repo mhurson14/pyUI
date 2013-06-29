@@ -2,6 +2,7 @@ import pygame
 from pygame import freetype
 from pygame.locals import *
 from ui import *
+import time
 
 class DefaultTextGraphics:
     def __init__(self, params):
@@ -19,14 +20,13 @@ class DefaultTextGraphics:
 
         self.font = None
 
-        self.dimensions = None
+        self.dimensions = params.dimensions
         self.topleft = params.topleft
-        self.image_left = None
-        self.image_selected = None
-        self.image_right = None
-        self.rect_left = None
-        self.rect_selected = None
-        self.rect_right = None
+        self.rect = pygame.Rect(self.topleft[0], self.topleft[1],
+                                self.dimensions[0], self.dimensions[1])
+        self.left_images = []
+        self.selected_images = []
+        self.right_images = []
 
         self.font = pygame.font.Font(self.font_type, self.font_size)
 
@@ -36,53 +36,101 @@ class DefaultTextGraphics:
 
         self.setSelected(0, 0)
 
-        image = self.font.render(self.text, True, self.font_color)
+        '''image = self.font.render(self.text, True, self.font_color)
         rect = image.get_rect()
-        self.dimensions = rect.size
+        self.dimensions = rect.size'''
+
+    def getRect(self):
+        return self.rect
+
+    def setRect(self, rect):
+        self.rect = rect
 
     def setSelected(self, start, end):
-
-        self.image_left = None
-        self.image_selected = None
-        self.image_right = None
-        self.rect_left = None
-        self.rect_selected = None
-        self.rect_right = None
+        
+        self.left_images = []
+        self.selected_images = []
+        self.right_images = []
         
         left = self.text[:start]
         selected = self.text[start:end]
         right = self.text[end:]
-        metrics = self.getMetrics()
+        
         if len(left) > 0:
-            self.image_left = self.font.render(left, True, self.font_color)
-            self.rect_left = self.image_left.get_rect()
-            self.rect_left.topleft = self.topleft
+            leftChars = int(15000 // self.font_size)
+            numLeft = int(len(left) // leftChars) + 1
+            for i in range(numLeft):
+                image_left = self.font.render(left[i * leftChars:(i + 1) * leftChars],
+                                              True, self.font_color)
+                rect_left = image_left.get_rect()
+                rect_left.top = self.topleft[1]
+                if i == 0:
+                    rect_left.left = self.topleft[0]
+                else:
+                    rect_left.left = self.left_images[i - 1][1].right
+                self.left_images.append((image_left, rect_left))
+                if rect_left.right > self.rect.right:
+                    break
         if len(selected) > 0:
-            self.image_selected = self.font.render(selected, True,
-                                                   (255, 255, 255, 255),
-                                                   (100, 200, 100, 255))
-            self.rect_selected = self.image_selected.get_rect()
-            self.rect_selected.top = self.topleft[1]
-            self.rect_selected.left = self.topleft[0]
-            self.rect_selected.left += sum([metric[4] for metric in metrics[:start]])
+            selectedChars = int(15000 // self.font_size)
+            numSelected = int(len(selected) // selectedChars) + 1
+            for i in range(numSelected):
+                image_selected = self.font.render(\
+                                 selected[i * selectedChars:(i + 1) * selectedChars],
+                                                  True, (255, 255, 255, 255),
+                                                  (100, 200, 100, 255))
+                rect_selected = image_selected.get_rect()
+                rect_selected.top = self.topleft[1]
+                if i == 0:
+                    if len(self.left_images) > 0:
+                        rect_selected.left = self.left_images[-1][1].right
+                    else:
+                        rect_selected.left = self.topleft[1]
+                else:
+                    rect_selected.left = self.selected_images[i - 1][1].right
+                self.selected_images.append((image_selected, rect_selected))
+                if rect_selected.right > self.rect.right:
+                    break
         if len(right) > 0:
-            self.image_right = self.font.render(right, True, self.font_color)
-            self.rect_right = self.image_right.get_rect()
-            self.rect_right.top = self.topleft[1]
-            self.rect_right.left = self.topleft[0]
-            self.rect_right.left += sum([metric[4] for metric in metrics[:end]])
+            rightChars = int(15000 // self.font_size)
+            numRight = int(len(right) // rightChars) + 1
+            for i in range(numRight):
+                image_right = self.font.render(right[i * rightChars:(i + 1) * rightChars],
+                                               True, self.font_color)
+                rect_right = image_right.get_rect()
+                rect_right.top = self.topleft[1]
+                if i == 0:
+                    if len(self.selected_images) > 0:
+                        rect_right.left = self.selected_images[-1][1].right
+                    elif len(self.left_images) > 0:
+                        rect_right.left = self.left_images[-1][1].right
+                    else:
+                        rect_right.left = self.topleft[1]
+                else:
+                    rect_right.left = self.right_images[i - 1][1].right
+                self.right_images.append((image_right, rect_right))
+                if rect_right.right > self.rect.right:
+                    break
 
     def getMetrics(self):
         return self.font.metrics(self.text)
 
     def draw(self, display_surface, area=None):
-        if self.image_left:
-            display_surface.displayImage(self.image_left, self.rect_left, area)
-        if self.image_selected:
-            display_surface.displayImage(self.image_selected, self.rect_selected, area)
-        if self.image_right:
-            display_surface.displayImage(self.image_right, self.rect_right, area)
-        #display_surface.displayImage(self.image, self.rect, area)
+        for image in self.left_images:
+            if self.rect.colliderect(image[1]):
+                left = image[1].left - self.rect.left
+                top = image[1].top
+                display_surface.displayImage(image[0], (left, top))
+        for image in self.selected_images:
+            if self.rect.colliderect(image[1]):
+                left = image[1].left - self.rect.left
+                top = image[1].top
+                display_surface.displayImage(image[0], (left, top))
+        for image in self.right_images:
+            if self.rect.colliderect(image[1]):
+                left = image[1].left - self.rect.left
+                top = image[1].top
+                display_surface.displayImage(image[0], (left, top))
 
 
 

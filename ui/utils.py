@@ -9,6 +9,14 @@ def getSizeOfText(text, font_size, font_type, bold, italic, underline):
     
     return font.size(text)
 
+def getTextHeight(font_size, font_type, bold, italic, underline):
+    font = pygame.font.Font(font_type, font_size)
+    font.set_bold(bold)
+    font.set_italic(italic)
+    font.set_underline(underline)
+
+    return font.get_height()
+
 def isEdgePixel(image, x, y):
 
     kernelX = [[-1, 0, 1],

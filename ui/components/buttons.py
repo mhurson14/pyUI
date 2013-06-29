@@ -10,9 +10,6 @@ class DefaultButton(button.Button):
                  font_color=(255,255,255,255),
                  bold=False, italic=False, underline=False):
 
-        text_size = utils.getSizeOfText(text_in, font_size, font_type,
-                                        bold, italic, underline)
-
         button_rect = pygame.Rect(0, 0, dimensions[0], dimensions[1])
         text_rect = pygame.Rect(0, 0, text_size[0], text_size[1])
         text_rect.center = button_rect.center

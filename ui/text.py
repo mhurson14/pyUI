@@ -1,6 +1,7 @@
 import pygame
 from ui.uicomponent import *
 import ui.utils
+import time
 
 class Text(UIComponent):
     def __init__(self, parent, surface, graphics,
@@ -30,6 +31,24 @@ class Text(UIComponent):
         else:
             return None
 
+    def getViewRect(self):
+        return self.graphics.getRect()
+
+    def setViewRect(self, rect):
+        self.graphics.setRect(rect)
+
+    def getRelativeCharacterRect(self, position):
+        rect = self.getRelativeRect()
+        top = rect.top
+        left = rect.left
+        metrics = self.graphics.getMetrics()
+        for i in range(position):
+            left += metrics[i][4]
+        height = rect.height
+        width = metrics[position][4] - metrics[position][0]
+        result = pygame.Rect(left, top, width + 1, height)
+        return result
+
     def getAbsoluteCharacterRect(self, position):
         rect = self.getAbsoluteRect()
         top = rect.top
@@ -40,6 +59,7 @@ class Text(UIComponent):
         height = rect.height
         width = metrics[position][4] - metrics[position][0]
         result = pygame.Rect(left, top, width + 1, height)
+        result.left -= self.getViewRect().left
         return result
 
     def getAbsoluteCharacterRects(self):
@@ -53,6 +73,7 @@ class Text(UIComponent):
             width = metrics[i][4] - metrics[i][0]
             height = rect.height
             result = pygame.Rect(left, top, width + 1, height)
+            result.left -= self.getViewRect().left
             results.append(result)
             advance += metrics[i][4]
         return results
@@ -60,6 +81,7 @@ class Text(UIComponent):
     def getHorizontalCoordinate(self, position):
         if position >= 0 and position <= len(self.text):
             result = self.getRelativeRect().left
+            result -= self.getViewRect().left
             if position > 0:
                 metrics = self.graphics.getMetrics()
                 if position <= len(metrics):
@@ -90,14 +112,14 @@ class Text(UIComponent):
 
         self.graphics_params.text = self.text
 
-        size = ui.utils.getSizeOfText(self.text, self.graphics_params.font_size,
+        '''size = ui.utils.getSizeOfText(self.text, self.graphics_params.font_size,
                                       self.graphics_params.font_type,
                                       self.graphics_params.bold,
                                       self.graphics_params.italic,
-                                      self.graphics_params.underline)
+                                      self.graphics_params.underline)'''
 
-        self.surface_params.dimensions = size
-        self.display_surface = self.surface_type(self.surface_params)
+        #self.surface_params.dimensions = size
+        #self.display_surface = self.surface_type(self.surface_params)
 
         self.graphics = self.graphics_type(self.graphics_params)
 

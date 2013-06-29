@@ -191,6 +191,30 @@ class CaretHandler(UIImplementer):
                 length = len(utils.pyperclip.paste())
                 self.caret.setLocation(start + length)
 
+class TextScroller(UIImplementer):
+    def __init__(self, text):
+
+        super().__init__()
+
+        self.text = text
+
+    def onSetLocation(self, position):
+
+        if position == len(self.text):
+            position -= 1
+
+        if position >= 0 and position < len(self.text):
+            view_rect = self.text.getViewRect()
+            char_rect = self.text.getRelativeCharacterRect(position)
+
+            char_rect.left -= self.text.getRelativeRect().left
+
+            if char_rect.left < view_rect.left:
+                view_rect.left = char_rect.left
+            elif char_rect.right > view_rect.right:
+                view_rect.right = char_rect.right
+            self.text.setViewRect(view_rect)
+
 
 
 

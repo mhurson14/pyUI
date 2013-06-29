@@ -52,7 +52,8 @@ def main():
     btn.setVisible(True)
 
     tbox = DefaultTextBox(topleft = (300, 20),
-                          font_type='/usr/share/fonts/truetype/freefont/FreeSans.ttf',)
+                          font_type='/usr/share/fonts/truetype/freefont/FreeSans.ttf',
+                          font_size = 20)
                           
     tbox.setVisible(True)
     menu.addComponents([panel])
@@ -61,7 +62,7 @@ def main():
     panel1 = DefaultPanel(parent = ui_screen, topleft = (area.width - 300, 0),
                           dimensions = (300, 100), outline_width = 1, border_width = 10)
 
-    label = DefaultLabel((20, 20), "Clicks: 0")
+    label = DefaultLabel("Clicks: 0", (20, 20))
     label.setVisible(True)
     panel1.addComponent(label)
     panel1.setVisible(True)

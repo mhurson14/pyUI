@@ -13,6 +13,8 @@ class Caret(UIComponent):
 
         self.text = text
 
+        self.text_scroller = ui.uiimplementers.TextScroller(self.text)
+
         self.position = pos
 
         self.blink_delay = blink_delay
@@ -36,13 +38,18 @@ class Caret(UIComponent):
     def getPosition(self):
         return self.position
 
+    def getLeft(self):
+        return self.display_surface.getRect().left
+
     def setLocation(self, position):
         if position >= 0 and position <= len(self.text):
+            self.text_scroller.onSetLocation(position)
             x = self.text.getHorizontalCoordinate(position)
             y = self.parent.getRelativeRect().height // 2 -\
                 self.getRelativeRect().height // 2
             self.display_surface.setTopleft((x, y))
             self.position = position
+            #print("X: ", x)
         self.graphics.setDisplay(True)
 
     def moveLeft(self):
