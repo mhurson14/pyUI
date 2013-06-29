@@ -49,7 +49,6 @@ class Caret(UIComponent):
                 self.getRelativeRect().height // 2
             self.display_surface.setTopleft((x, y))
             self.position = position
-            #print("X: ", x)
         self.graphics.setDisplay(True)
 
     def moveLeft(self):
