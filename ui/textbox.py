@@ -90,8 +90,8 @@ class TextBox(FocusableUIComponent):
             
             if event.unicode in self.valid_keys:
                 if start != end:
-                        self.text.deleteText(start, end - 1)
-                self.text.insertText(event.unicode, self.caret.getPosition())
+                    self.text.deleteText(start, end - 1)
+                self.text.insertText(event.unicode, start)
             elif event.key == self.backspace:
                 if start == end:
                     self.text.deleteCharacter(self.caret.getPosition() - 1)

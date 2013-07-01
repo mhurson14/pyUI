@@ -11,17 +11,19 @@ class DefaultButton(button.Button):
                  bold=False, italic=False, underline=False):
 
         button_rect = pygame.Rect(0, 0, dimensions[0], dimensions[1])
-        text_rect = pygame.Rect(0, 0, text_size[0], text_size[1])
+        text_rect = pygame.Rect(0, 0, dimensions[0] - 10, dimensions[1] - 10)
         text_rect.center = button_rect.center
+        text_rect.top += 1
 
         textObject = text.Text(None, displaysurface.DisplaySurface,
                                textgraphics.DefaultTextGraphics,
                                parameters.DisplaySurfaceParameters(\
-                                   dimensions=text_size,
+                                   dimensions=text_rect.size,
                                    topleft=text_rect.topleft,
                                    flags=SRCALPHA),
                                parameters.DefaultTextGraphicsParameters(\
                                    text=text_in,
+                                   dimensions=text_rect.size,
                                    font_size=font_size,
                                    font_type=font_type,
                                    font_color=font_color,

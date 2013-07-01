@@ -158,18 +158,12 @@ class CaretHandler(UIImplementer):
         self.caret.setLocation(position)
 
     def onKeyPress(self, event):
-        if event.unicode in self.valid_keys:
-            self.caret.moveRight()
-        elif event.key == self.left:
-            self.caret.moveLeft()
-        elif event.key == self.right:
-            self.caret.moveRight()
-        elif event.key == self.home:
-            self.caret.setLocation(0)
-        elif event.key == self.end:
-            self.caret.setLocation(len(self.text))
 
         if type(self.text) == ui.text.SelectableText:
+            if event.unicode in self.valid_keys:
+                if self.text.getSelectionStart() != self.text.getSelectionEnd():
+                    self.caret.setLocation(self.text.getSelectionStart())
+                self.caret.moveRight()
             if event.key == self.backspace:
                 if self.text.getSelectionStart() != self.text.getSelectionEnd():
                     self.caret.setLocation(self.text.getSelectionStart())
@@ -177,6 +171,18 @@ class CaretHandler(UIImplementer):
                     self.caret.setLocation(self.text.getSelectionStart() - 1)
             if event.key == self.delete:
                 self.caret.setLocation(self.text.getSelectionStart())
+        else:
+            if event.unicode in self.valid_keys:
+                self.caret.moveRight()
+        
+        if event.key == self.left:
+            self.caret.moveLeft()
+        elif event.key == self.right:
+            self.caret.moveRight()
+        elif event.key == self.home:
+            self.caret.setLocation(0)
+        elif event.key == self.end:
+            self.caret.setLocation(len(self.text))
 
         keys = pygame.key.get_pressed()
         if keys[K_RCTRL] or keys[K_LCTRL]:
@@ -209,10 +215,19 @@ class TextScroller(UIImplementer):
 
             char_rect.left -= self.text.getRelativeRect().left
 
+            '''print("Position: ", position)
+            print("View Rect: ", view_rect, '    ', view_rect.right)
+            print("Char Rect: ", char_rect, '    ', char_rect.right)
+            print()'''
+
             if char_rect.left < view_rect.left:
                 view_rect.left = char_rect.left
             elif char_rect.right > view_rect.right:
                 view_rect.right = char_rect.right
+            self.text.setViewRect(view_rect)
+        elif len(self.text) == 0:
+            view_rect = self.text.getViewRect()
+            view_rect.left = 0
             self.text.setViewRect(view_rect)
 
 

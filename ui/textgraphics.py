@@ -36,9 +36,9 @@ class DefaultTextGraphics:
 
         self.setSelected(0, 0)
 
-        '''image = self.font.render(self.text, True, self.font_color)
-        rect = image.get_rect()
-        self.dimensions = rect.size'''
+    def setText(self, text):
+        self.text = text
+        self.setSelected(0, 0)
 
     def getRect(self):
         return self.rect

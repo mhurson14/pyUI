@@ -110,7 +110,9 @@ class Text(UIComponent):
     def setText(self, text):
         self.text = text
 
-        self.graphics_params.text = self.text
+        self.graphics.setText(text)
+
+        #self.graphics_params.text = self.text
 
         '''size = ui.utils.getSizeOfText(self.text, self.graphics_params.font_size,
                                       self.graphics_params.font_type,
@@ -121,7 +123,7 @@ class Text(UIComponent):
         #self.surface_params.dimensions = size
         #self.display_surface = self.surface_type(self.surface_params)
 
-        self.graphics = self.graphics_type(self.graphics_params)
+        #self.graphics = self.graphics_type(self.graphics_params)
 
     def getText(self):
         return self.text
