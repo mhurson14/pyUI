@@ -9,5 +9,8 @@ class Screen(UIComponent):
 
         self.setVisible(True)
 
+    def getAbsoluteRect(self):
+        return pygame.display.get_surface().get_rect()
+
     def getVisible(self):
         return self.visible

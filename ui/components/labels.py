@@ -7,8 +7,8 @@ class DefaultLabel(ui.text.Text):
                  font_color=(255,255,255,255),
                  bold=False, italic=False, underline=False):
 
-        '''text_size = ui.utils.getSizeOfText(text, font_size, font_type,
-                                        bold, italic, underline)'''
+        text_size = ui.utils.getSizeOfText(text, font_size, font_type,
+                                        bold, italic, underline)
 
         dimensions = (width, ui.utils.getTextHeight(font_size, font_type,
                                                     bold, italic, underline))
@@ -16,7 +16,7 @@ class DefaultLabel(ui.text.Text):
         super().__init__(None, ui.displaysurface.DisplaySurface,
                                ui.textgraphics.DefaultTextGraphics,
                                ui.parameters.DisplaySurfaceParameters(\
-                                   dimensions=dimensions,
+                                   dimensions=text_size,
                                    topleft=topleft,
                                    flags=SRCALPHA),
                                ui.parameters.DefaultTextGraphicsParameters(\

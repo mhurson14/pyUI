@@ -269,11 +269,11 @@ class UIComponent:
                 self.absolute_rect.top += parent_rect.top
 
     def getAbsoluteRect(self):
-        if self.absolute_rect:
-            return self.absolute_rect
-        else:
-            self.calculateAbsoluteRect()
-            return self.absolute_rect
+        #if self.absolute_rect:
+            # return self.absolute_rect
+        # else:
+        self.calculateAbsoluteRect()
+        return self.absolute_rect
 
     def getRelativeRect(self):
         return self.display_surface.getRect()
