@@ -3,4 +3,4 @@ class UIGraphics:
         pass
 
     def draw(self, display_surface, area=None):
-        pass
+        display_surface.displayImage(self.image, self.rect, area)
