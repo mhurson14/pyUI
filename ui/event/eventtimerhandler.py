@@ -1,6 +1,9 @@
+import threading
+import time
+
 import pygame
-import threading, time
-from ui.eventtimercontainer import EventTimerContainer
+from ui.event.eventtimercontainer import EventTimerContainer
+
 
 class EventTimerHandler:
     def __init__(self):

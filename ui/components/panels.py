@@ -1,5 +1,7 @@
-from ui import *
 from pygame.locals import *
+from ui.panel import panel, panelgraphics
+from ui.displaysurface import displaysurface
+from ui import parameters
 
 class DefaultPanel(panel.Panel):
     def __init__(self, parent=None, dimensions=(100, 100), topleft=(0, 0),

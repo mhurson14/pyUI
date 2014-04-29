@@ -1,6 +1,10 @@
 import pygame
 from pygame.locals import *
-import ui, utils
+
+import ui
+import utils
+from ui.text import text
+
 
 class UIImplementer:
     def __init__(self):
@@ -159,7 +163,7 @@ class CaretHandler(UIImplementer):
 
     def onKeyPress(self, event):
 
-        if type(self.text) == ui.text.SelectableText:
+        if type(self.text) == text.SelectableText:
             if event.unicode in self.valid_keys:
                 if self.text.getSelectionStart() != self.text.getSelectionEnd():
                     self.caret.setLocation(self.text.getSelectionStart())
@@ -189,7 +193,7 @@ class CaretHandler(UIImplementer):
             if event.key == K_a:
                 self.caret.setLocation(self.text.getEnd())
             elif event.key == K_v:
-                if type(self.text) == ui.text.SelectableText:
+                if type(self.text) == text.SelectableText:
                     start = self.text.getSelectionStart()
                 else:
                     start = self.caret.getPosition()

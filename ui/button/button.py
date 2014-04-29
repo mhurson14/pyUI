@@ -1,7 +1,7 @@
 import pygame
-import ui
-import ui.uievent
-from ui.uicomponent import *
+from ui.event import uievent
+from ui import internals
+from ui.component.uicomponent import UIComponent
 
 class Button(UIComponent):
     def __init__(self, parent, surface, graphics,
@@ -13,9 +13,9 @@ class Button(UIComponent):
         self.text = text
         self.addMember(self.text)
 
-        self.registerEvent(ui.internals.MOUSEMOTIONEVENT, self.onMouseMove)
-        self.registerEvent(ui.internals.MOUSEBUTTONDOWNEVENT, self.onMouseOnePress)
-        self.registerEvent(ui.internals.MOUSEBUTTONUPEVENT, self.onMouseOneRelease)
+        self.registerEvent(internals.MOUSEMOTIONEVENT, self.onMouseMove)
+        self.registerEvent(internals.MOUSEBUTTONDOWNEVENT, self.onMouseOnePress)
+        self.registerEvent(internals.MOUSEBUTTONUPEVENT, self.onMouseOneRelease)
 
     def drawMembers(self):
         self.text.draw()
@@ -28,7 +28,7 @@ class Button(UIComponent):
         self.state = state
     
     def pressedMouseOneReleaseCollide(self, event):
-        pygame.event.post(ui.uievent.ButtonPressEvent(self).getEvent())
+        pygame.event.post(uievent.ButtonPressEvent(self).getEvent())
 
 
 

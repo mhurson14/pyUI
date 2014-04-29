@@ -5,33 +5,33 @@
 '''
 
 import ui.button
-import ui.buttongraphics
+import ui.button.buttongraphics
 import ui.caret
-import ui.caretgraphics
+import ui.caret.caretgraphics
 import ui.constants
 import ui.displaysurface
-import ui.eventdispatcher
-import ui.eventhandler
-import ui.eventtimer
-import ui.eventtimercontainer
-import ui.eventtimerhandler
+import ui.event.eventdispatcher
+import ui.event.eventhandler
+import ui.event.eventtimer
+import ui.event.eventtimercontainer
+import ui.event.eventtimerhandler
 #import ui.internals
 import ui.menu
-import ui.nullgraphics
+import ui.graphics.nullgraphics
 import ui.panel
-import ui.panelgraphics
+import ui.panel.panelgraphics
 import ui.parameters
 import ui.screen
 import ui.text
-import ui.textbox
-import ui.textboxgraphics
-import ui.textgraphics
-import ui.uicomponent
-import ui.uievent
+import ui.text.textbox
+import ui.text.textboxgraphics
+import ui.text.textgraphics
+import ui.component.uicomponent
+import ui.event.uievent
 import ui.uiexceptions
 import ui.uiimplementers
 import ui.utils
 from ui.initialize import init
 
-event = ui.eventhandler.EventHandler()
+event = ui.event.eventhandler.EventHandler()
 internals = ui.constants.Internals()

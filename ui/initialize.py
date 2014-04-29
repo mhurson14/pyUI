@@ -1,5 +1,5 @@
 import ui
-from ui.eventdispatcher import EventDispatcher
+
 
 def init(ui_event_id=25):
     print("Initializing...")

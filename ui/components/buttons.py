@@ -1,6 +1,9 @@
 import pygame
-from ui import *
 from pygame.locals import *
+from ui.button import button, buttongraphics
+from ui.text import text, textgraphics
+from ui.displaysurface import displaysurface
+from ui import parameters
 
 
 class DefaultButton(button.Button):

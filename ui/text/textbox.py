@@ -1,6 +1,11 @@
-import ui, utils
-from ui.uicomponent import *
 from pygame.locals import *
+
+import utils
+from ui.component.uicomponent import *
+from ui.caret import caret as c, caretgraphics
+from ui.displaysurface import displaysurface
+from ui import parameters
+
 
 class TextBox(FocusableUIComponent):
     def __init__(self, parent, surface, graphics,
@@ -27,13 +32,13 @@ class TextBox(FocusableUIComponent):
         if not self.caret:
             tl = (self.text.getHorizontalCoordinate(0),
                   self.display_surface.getRect().height // 2 - 10)
-            self.caret = ui.caret.Caret(None, ui.displaysurface.DisplaySurface,
-                                        ui.caretgraphics.DefaultCaretGraphics,
-                                        ui.parameters.DisplaySurfaceParameters(\
-                                            dimensions=(1, 20), topleft=tl,
-                                            flags=SRCALPHA),
-                                        ui.parameters.DefaultCaretGraphicsParameters(),
-                                        self.text)
+            self.caret = c.Caret(None, displaysurface.DisplaySurface,
+                                 caretgraphics.DefaultCaretGraphics,
+                                 parameters.DisplaySurfaceParameters(
+                                     dimensions=(1, 20), topleft=tl,
+                                     flags=SRCALPHA),
+                                 ui.parameters.DefaultCaretGraphicsParameters(),
+                                 self.text)
         self.addMember(self.caret)
 
         self.setValidKeys()
@@ -83,11 +88,11 @@ class TextBox(FocusableUIComponent):
 
     def onKeyPress(self, event):
         if self.hasFocus():
-            
+
             start = self.text.getSelectionStart()
             end = self.text.getSelectionEnd()
             keys = pygame.key.get_pressed()
-            
+
             if event.unicode in self.valid_keys:
                 if start != end:
                     self.text.deleteText(start, end - 1)
@@ -102,7 +107,7 @@ class TextBox(FocusableUIComponent):
                     self.text.deleteCharacter(self.caret.getPosition())
                 else:
                     self.text.deleteText(start, end - 1)
-            
+
             if keys[K_LCTRL] or keys[K_RCTRL]:
                 if event.key == K_c and start != end:
                     utils.pyperclip.copy(self.text.getText()[start:end])

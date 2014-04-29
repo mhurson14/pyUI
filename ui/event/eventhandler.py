@@ -1,9 +1,7 @@
-import pygame
-import time
 import ui
-from pygame.locals import *
-from ui import eventdispatcher
-from ui.eventtimerhandler import *
+from ui.event.eventtimerhandler import *
+from ui.event import eventdispatcher
+
 
 class EventHandler:
     def __init__(self):

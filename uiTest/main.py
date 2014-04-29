@@ -1,24 +1,14 @@
-import pygame, loadimage, time
+import time
 from pygame import freetype
-from pygame.locals import *
-import ui
-from ui.menu import *
-from ui.nullgraphics import *
-from ui.parameters import *
-from ui.displaysurface import *
-from ui.panelgraphics import *
-from ui.panel import *
-from ui.button import *
-from ui.textbox import *
-from ui.textboxgraphics import *
-from ui.uicomponent import *
+
 from ui.components.menus import *
+
 from ui.components.panels import *
 from ui.components.buttons import *
 from ui.components.labels import *
 from ui.components.textboxes import *
 from ui.screen import *
-from uitestevents import *
+
 
 def main():
     pygame.init()

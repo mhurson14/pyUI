@@ -1,7 +1,5 @@
-import pygame
-from ui.uicomponent import *
-import ui.utils
-import time
+from ui.component.uicomponent import *
+
 
 class Text(UIComponent):
     def __init__(self, parent, surface, graphics,
@@ -9,7 +7,7 @@ class Text(UIComponent):
 
         super().__init__(parent, surface, graphics,
                          surface_params, graphics_params)
-        
+
         self.text = text
 
     def getEnd(self):
@@ -111,6 +109,11 @@ class Text(UIComponent):
         self.text = text
 
         self.graphics.setText(text)
+        self.display_surface.setDimensions(ui.utils.getSizeOfText(self.text, self.graphics_params.font_size,
+                                                                  self.graphics_params.font_type,
+                                                                  self.graphics_params.bold,
+                                                                  self.graphics_params.italic,
+                                                                  self.graphics_params.underline))
 
         #self.graphics_params.text = self.text
 
@@ -131,10 +134,10 @@ class Text(UIComponent):
     def __len__(self):
         return len(self.text)
 
+
 class SelectableText(Text):
     def __init__(self, parent, surface, graphics,
                  surface_params, graphics_params, text=''):
-
         super().__init__(parent, surface, graphics,
                          surface_params, graphics_params)
 

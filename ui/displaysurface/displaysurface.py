@@ -9,27 +9,38 @@ class DisplaySurface:
         
         self.dimensions = params.dimensions
         self.topleft = params.topleft
+
+        self.flags = params.flags
+        self.depth = params.depth
+        self.masks = params.masks
         
         self.surface = None
         self.rect = None
 
-        self.createSurface(params)
+        self.createSurface()
+        self.createRect()
 
-        self.rect = self.surface.get_rect()
-        self.rect.topleft = self.topleft
-
-    def createSurface(self, params):
+    def createSurface(self):
 
         kwargs = {}
         
-        if params.flags:
-            kwargs['flags'] = params.flags
-        if params.depth:
-            kwargs['depth'] = params.depth
-        if params.masks:
-            kwargs['masks'] = params.masks
+        if self.flags:
+            kwargs['flags'] = self.flags
+        if self.depth:
+            kwargs['depth'] = self.depth
+        if self.masks:
+            kwargs['masks'] = self.masks
 
-        self.surface = pygame.Surface(params.dimensions, **kwargs)
+        self.surface = pygame.Surface(self.dimensions, **kwargs)
+
+    def createRect(self):
+        self.rect = self.surface.get_rect()
+        self.rect.topleft = self.topleft
+
+    def setDimensions(self, dimensions):
+        self.dimensions = dimensions
+        self.createSurface()
+        self.createRect()
 
     def setTopleft(self, topleft):
         self.topleft = topleft
@@ -61,17 +72,17 @@ class TransparentBackgroundDisplaySurface(DisplaySurface):
     def __init__(slef, params):
         super().__init__(params)
 
-    def createSurface(self, params):
+    def createSurface(self):
         kwargs = {}
         
-        if params.flags:
-            kwargs['flags'] = params.flags
-        if params.depth:
-            kwargs['depth'] = params.depth
-        if params.masks:
-            kwargs['masks'] = params.masks
+        if self.flags:
+            kwargs['flags'] = self.flags
+        if self.depth:
+            kwargs['depth'] = self.depth
+        if self.masks:
+            kwargs['masks'] = self.masks
 
-        self.surface = pygame.Surface(params.dimensions, **kwargs)
+        self.surface = pygame.Surface(self.dimensions, **kwargs)
 
         self.surface.set_colorkey((0,0,0))
 
@@ -83,7 +94,7 @@ class ScreenSurface(DisplaySurface):
         
         super().__init__(params)
 
-    def createSurface(self, params):
+    def createSurface(self):
         self.surface = pygame.display.get_surface()
 
 class NullSurface:

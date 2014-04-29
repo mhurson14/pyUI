@@ -1,5 +1,3 @@
-import ui.eventdispatcher
-
 class Internals:
     def __init__(self):
         #CONSTANTS:

@@ -1,5 +1,4 @@
-import pygame
-from ui.uicomponent import *
+from ui.component.uicomponent import *
 
 class Menu(UIContainer):
     def __init__(self, parent, surface, graphics, surface_params, graphics_params):

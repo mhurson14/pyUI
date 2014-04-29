@@ -1,7 +1,6 @@
-import ui
-from ui.uicomponent import *
-from ui import eventtimer
-from ui import uievent
+from ui.event import eventtimer, uievent
+from ui.component.uicomponent import *
+
 
 class Caret(UIComponent):
     def __init__(self, parent, surface, graphics,

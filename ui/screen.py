@@ -1,11 +1,11 @@
-import ui
-from ui.uicomponent import *
+from ui.component.uicomponent import *
+from ui.displaysurface import displaysurface
 
 class Screen(UIComponent):
     def __init__(self):
 
-        super().__init__(None, ui.displaysurface.ScreenSurface,
-                         ui.nullgraphics.NullGraphics, None, None)
+        super().__init__(None, displaysurface.ScreenSurface,
+                         ui.graphics.nullgraphics.NullGraphics, None, None)
 
         self.setVisible(True)
 

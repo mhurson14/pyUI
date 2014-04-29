@@ -1,5 +1,8 @@
-from ui import *
 from pygame.locals import *
+from ui.menu import menu
+from ui.displaysurface import displaysurface
+from ui.graphics import nullgraphics
+from ui import parameters
 
 class DefaultMenu(menu.Menu):
     def __init__(self, parent=None, topleft=(0, 0), dimensions=(100, 100)):
