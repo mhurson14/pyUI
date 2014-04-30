@@ -1,7 +1,8 @@
 import pygame
-import ui
 import time
 import threading
+from framework.exceptions import initializationerror
+
 
 class EventTimer:
     def __init__(self, event, time_ms):
@@ -35,5 +36,5 @@ class EventTimer:
                 pygame.event.post(self.event)
         else:
             self.lock.release()
-            raise ui.uiexceptions.InitializationError("Timer not initialized")
+            raise initializationerror.InitializationError("Timer not initialized")
         self.lock.release()

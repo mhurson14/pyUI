@@ -5,24 +5,19 @@
 '''
 
 import ui.button
-import ui.button.buttongraphics
+import ui.button.buttonGraphics
 import ui.caret
-import ui.caret.caretgraphics
-import ui.displaysurface
+import ui.caret.caretGraphics
 #import ui.internals
 import ui.menu
-import ui.graphics.nullgraphics
 import ui.panel
-import ui.panel.panelgraphics
-import ui.parameters
-import ui.screen
+import ui.panel.defaultPanelGraphics
 import ui.text
-import ui.text.textbox
-import ui.text.textboxgraphics
-import ui.text.textgraphics
-import ui.component.uicomponent
-import ui.event.uievent
-import ui.uiexceptions
+import ui.text.textBox
+import ui.text.textBoxGraphics
+import ui.text.textGraphics
+import ui.component.uiComponent
+import ui.event.uiEvent
 import ui.uiimplementers
 import ui.utils
 

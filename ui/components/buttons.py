@@ -1,9 +1,12 @@
 import pygame
 from pygame.locals import *
-from ui.button import button, buttongraphics
-from ui.text import text, textgraphics
-from ui.displaysurface import displaysurface
-from ui import parameters
+
+from framework.displaysurface import displaysurface
+from framework.parameters.displaySurfaceParameters import DisplaySurfaceParameters
+from ui.button import button, buttonGraphics
+from ui.button.defaultButtonGraphicsParameters import DefaultButtonGraphicsParameters
+from ui.text import text, textGraphics
+from ui.text.defaultTextGraphicsParameters import DefaultTextGraphicsParameters
 
 
 class DefaultButton(button.Button):
@@ -19,12 +22,12 @@ class DefaultButton(button.Button):
         text_rect.top += 1
 
         textObject = text.Text(None, displaysurface.DisplaySurface,
-                               textgraphics.DefaultTextGraphics,
-                               parameters.DisplaySurfaceParameters(\
+                               textGraphics.DefaultTextGraphics,
+                               DisplaySurfaceParameters(
                                    dimensions=text_rect.size,
                                    topleft=text_rect.topleft,
                                    flags=SRCALPHA),
-                               parameters.DefaultTextGraphicsParameters(\
+                               DefaultTextGraphicsParameters(
                                    text=text_in,
                                    dimensions=text_rect.size,
                                    font_size=font_size,
@@ -37,12 +40,12 @@ class DefaultButton(button.Button):
         textObject.setVisible(True)
         
         super().__init__(None, displaysurface.DisplaySurface,
-                         buttongraphics.DefaultButtonGraphics,
-                         parameters.DisplaySurfaceParameters(\
+                         buttonGraphics.DefaultButtonGraphics,
+                         DisplaySurfaceParameters(
                              dimensions=dimensions,
                              topleft=topleft,
                              flags=SRCALPHA),
-                         parameters.DefaultButtonGraphicsParameters(\
+                         DefaultButtonGraphicsParameters(
                              dimensions = dimensions,
                              color = color,
                              highlight_color = highlight_color),

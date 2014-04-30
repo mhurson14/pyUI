@@ -1,4 +1,4 @@
-from ui.component.uicomponent import *
+from ui.component.uiComponent import *
 
 class Menu(UIContainer):
     def __init__(self, parent, surface, graphics, surface_params, graphics_params):

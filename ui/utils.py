@@ -1,5 +1,5 @@
 import pygame
-from pygame import freetype
+
 
 def getSizeOfText(text, font_size, font_type, bold, italic, underline):
     font = pygame.font.Font(font_type, font_size)

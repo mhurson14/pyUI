@@ -1,9 +1,10 @@
 from pygame.locals import *
 
-from ui.displaysurface import displaysurface
-from ui.text import text as t, textgraphics
-from ui import parameters
+from framework.displaysurface import displaysurface
+from framework.parameters.displaySurfaceParameters import DisplaySurfaceParameters
+from ui.text import text as t, textGraphics
 from ui import utils
+from ui.text.defaultTextGraphicsParameters import DefaultTextGraphicsParameters
 
 
 class DefaultLabel(t.Text):
@@ -18,12 +19,12 @@ class DefaultLabel(t.Text):
                                                  bold, italic, underline))
 
         super().__init__(None, displaysurface.DisplaySurface,
-                         textgraphics.DefaultTextGraphics,
-                         parameters.DisplaySurfaceParameters(
+                         textGraphics.DefaultTextGraphics,
+                         DisplaySurfaceParameters(
                              dimensions=text_size,
                              topleft=topleft,
                              flags=SRCALPHA),
-                         parameters.DefaultTextGraphicsParameters(
+                         DefaultTextGraphicsParameters(
                              text=text,
                              dimensions=text_size,
                              font_size=font_size,

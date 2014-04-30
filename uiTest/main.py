@@ -1,6 +1,7 @@
 import time
 
 from pygame import freetype
+
 import framework
 
 from ui.components.menus import *
@@ -8,8 +9,8 @@ from ui.components.menus import *
 from ui.components.panels import *
 from ui.components.buttons import *
 from ui.components.labels import *
-from ui.components.textboxes import *
-from ui.screen import *
+from ui.components.textBoxes import *
+from framework.screen.screen import *
 
 
 def main():
@@ -107,5 +108,5 @@ class ClickCounter:
 
 if __name__ == "__main__":
     main()
-    ui.event.stop()
+    framework.eventHandler.stop()
     pygame.quit()

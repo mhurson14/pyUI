@@ -1,11 +1,13 @@
 import pygame
 from pygame.locals import *
 
+from framework.displaysurface import displaysurface
+from framework.parameters import parameters
+from framework.parameters.displaySurfaceParameters import DisplaySurfaceParameters
+from ui.caret.defaultCaretGraphicsParameters import DefaultCaretGraphicsParameters
 import utils
-from ui.component.uicomponent import *
-from ui.caret import caret as c, caretgraphics
-from ui.displaysurface import displaysurface
-from ui import parameters
+from ui.component.uiComponent import *
+from ui.caret import caret as c, caretGraphics
 
 
 class TextBox(FocusableUIComponent):
@@ -34,11 +36,11 @@ class TextBox(FocusableUIComponent):
             tl = (self.text.getHorizontalCoordinate(0),
                   self.display_surface.getRect().height // 2 - 10)
             self.caret = c.Caret(None, displaysurface.DisplaySurface,
-                                 caretgraphics.DefaultCaretGraphics,
-                                 parameters.DisplaySurfaceParameters(
+                                 caretGraphics.DefaultCaretGraphics,
+                                 DisplaySurfaceParameters(
                                      dimensions=(1, 20), topleft=tl,
                                      flags=SRCALPHA),
-                                 ui.parameters.DefaultCaretGraphicsParameters(),
+                                 DefaultCaretGraphicsParameters(),
                                  self.text)
         self.addMember(self.caret)
 

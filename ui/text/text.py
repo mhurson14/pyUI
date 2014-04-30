@@ -1,5 +1,5 @@
 import pygame
-from ui.component.uicomponent import *
+from ui.component.uiComponent import *
 
 
 class Text(UIComponent):

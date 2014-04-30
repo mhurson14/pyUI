@@ -1,12 +1,15 @@
 import pygame
 from pygame.locals import *
-from ui.text import textbox, textboxgraphics, textgraphics, text as t
-from ui.displaysurface import displaysurface
-from ui import parameters
+
+from framework.displaysurface import displaysurface
+from framework.parameters.displaySurfaceParameters import DisplaySurfaceParameters
+from ui.text import textBox, textBoxGraphics, textGraphics, text as t
 from ui import utils
+from ui.text.defaultTextBoxGraphicsParameters import DefaultTextBoxGraphicsParameters
+from ui.text.defaultTextGraphicsParameters import DefaultTextGraphicsParameters
 
 
-class DefaultTextBox(textbox.TextBox):
+class DefaultTextBox(textBox.TextBox):
     def __init__(self, topleft=(0, 0), dimensions=(150, 35),
                  background_color=(255, 255, 255, 255),
                  text='', font_size=20, font_type=None,
@@ -23,12 +26,12 @@ class DefaultTextBox(textbox.TextBox):
         text_rect.centery = box_rect.centery
 
         text_object = t.SelectableText(None, displaysurface.DisplaySurface,
-                                       textgraphics.DefaultTextGraphics,
-                                       parameters.DisplaySurfaceParameters(
+                                       textGraphics.DefaultTextGraphics,
+                                       DisplaySurfaceParameters(
                                            dimensions=text_rect.size,
                                            topleft=text_rect.topleft,
                                            flags=SRCALPHA),
-                                       parameters.DefaultTextGraphicsParameters(
+                                       DefaultTextGraphicsParameters(
                                            text=text,
                                            dimensions=text_rect.size,
                                            font_size=font_size,
@@ -40,10 +43,10 @@ class DefaultTextBox(textbox.TextBox):
         text_object.setVisible(True)
 
         super().__init__(None, displaysurface.DisplaySurface,
-                         textboxgraphics.DefaultTextBoxGraphics,
-                         parameters.DisplaySurfaceParameters(
+                         textBoxGraphics.DefaultTextBoxGraphics,
+                         DisplaySurfaceParameters(
                              dimensions=dimensions,
                              topleft=topleft,
                              flags=SRCALPHA),
-                         parameters.DefaultTextBoxGraphicsParameters(dimensions=dimensions),
+                         DefaultTextBoxGraphicsParameters(dimensions=dimensions),
                          text_object)

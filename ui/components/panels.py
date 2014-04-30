@@ -1,7 +1,10 @@
 from pygame.locals import *
-from ui.panel import panel, panelgraphics
-from ui.displaysurface import displaysurface
-from ui import parameters
+
+from framework.displaysurface import displaysurface
+from framework.parameters.displaySurfaceParameters import DisplaySurfaceParameters
+from ui.panel import panel, defaultPanelGraphics
+from ui.panel.defaultPanelGraphicsParameters import DefaultPanelGraphicsParameters
+
 
 class DefaultPanel(panel.Panel):
     def __init__(self, parent=None, dimensions=(100, 100), topleft=(0, 0),
@@ -10,12 +13,12 @@ class DefaultPanel(panel.Panel):
                  background_color=(100, 200, 100)):
 
         super().__init__(parent, displaysurface.DisplaySurface,
-                         panelgraphics.DefaultPanelGraphics,
-                         parameters.DisplaySurfaceParameters(\
+                         defaultPanelGraphics.DefaultPanelGraphics,
+                         DisplaySurfaceParameters(
                              dimensions=dimensions,
                              topleft=topleft,
                              flags=SRCALPHA),
-                         parameters.DefaultPanelGraphicsParameters(\
+                         DefaultPanelGraphicsParameters(
                              dimensions=dimensions,
                              outline_width=outline_width,
                              border_width=border_width,

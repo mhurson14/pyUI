@@ -1,7 +1,7 @@
 import pygame
 import framework
-from ui.event import uievent
-from ui.component.uicomponent import UIComponent
+from ui.event import uiEvent
+from ui.component.uiComponent import UIComponent
 
 class Button(UIComponent):
     def __init__(self, parent, surface, graphics,
@@ -28,7 +28,7 @@ class Button(UIComponent):
         self.state = state
     
     def pressedMouseOneReleaseCollide(self, event):
-        pygame.event.post(uievent.ButtonPressEvent(self).getEvent())
+        pygame.event.post(uiEvent.ButtonPressEvent(self).getEvent())
 
 
 

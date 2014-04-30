@@ -1,6 +1,5 @@
 import pygame
-from pygame.locals import *
-from ui.parameters import *
+
 
 class DisplaySurface:
     def __init__(self, params):
@@ -67,45 +66,6 @@ class DisplaySurface:
         '''Draw other DisplaySurfaces to this surface.'''
 
         self.surface.blit(surf.getSurface(), surf.getRect(), area)
-
-class TransparentBackgroundDisplaySurface(DisplaySurface):
-    def __init__(slef, params):
-        super().__init__(params)
-
-    def createSurface(self):
-        kwargs = {}
-        
-        if self.flags:
-            kwargs['flags'] = self.flags
-        if self.depth:
-            kwargs['depth'] = self.depth
-        if self.masks:
-            kwargs['masks'] = self.masks
-
-        self.surface = pygame.Surface(self.dimensions, **kwargs)
-
-        self.surface.set_colorkey((0,0,0))
-
-class ScreenSurface(DisplaySurface):
-    def __init__(self, params=None):
-
-        params = DisplaySurfaceParameters(pygame.display.get_surface().get_rect().size,
-                                          (0, 0))
-        
-        super().__init__(params)
-
-    def createSurface(self):
-        self.surface = pygame.display.get_surface()
-
-class NullSurface:
-    def __init__(self):
-        pass
-
-    def displaySurface(self, surf, area=None):
-        pass
-
-    def clear(self):
-        pass
 
 
 
