@@ -2,7 +2,8 @@ import threading
 import time
 
 import pygame
-from ui.event.eventtimercontainer import EventTimerContainer
+
+from framework.event.eventtimercontainer import EventTimerContainer
 
 
 class EventTimerHandler:

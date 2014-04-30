@@ -1,3 +1,4 @@
+import pygame
 from ui.component.uicomponent import *
 
 

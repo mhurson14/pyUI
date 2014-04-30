@@ -8,13 +8,7 @@ import ui.button
 import ui.button.buttongraphics
 import ui.caret
 import ui.caret.caretgraphics
-import ui.constants
 import ui.displaysurface
-import ui.event.eventdispatcher
-import ui.event.eventhandler
-import ui.event.eventtimer
-import ui.event.eventtimercontainer
-import ui.event.eventtimerhandler
 #import ui.internals
 import ui.menu
 import ui.graphics.nullgraphics
@@ -31,7 +25,4 @@ import ui.event.uievent
 import ui.uiexceptions
 import ui.uiimplementers
 import ui.utils
-from ui.initialize import init
 
-event = ui.event.eventhandler.EventHandler()
-internals = ui.constants.Internals()

@@ -1,9 +1,10 @@
-import ui
-from ui.event.eventtimerhandler import *
-from ui.event import eventdispatcher
+import framework
+from framework.event import eventdispatcher
+from framework.event.eventtimerhandler import *
 
 
 class EventHandler:
+
     def __init__(self):
         #Event types:
         #    key: the event type
@@ -20,7 +21,7 @@ class EventHandler:
     
     def process(self, event):
         #print(UIEVENT)
-        if event.type == ui.internals.UIEVENT and event.ui_type in self.event_types:
+        if event.type == framework.internals.UIEVENT and event.ui_type in self.event_types:
             self.event_types[event.ui_type].notify(event)
         elif event.type in self.event_types:
             self.event_types[event.type].notify(event)

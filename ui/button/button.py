@@ -1,6 +1,6 @@
 import pygame
+import framework
 from ui.event import uievent
-from ui import internals
 from ui.component.uicomponent import UIComponent
 
 class Button(UIComponent):
@@ -13,9 +13,9 @@ class Button(UIComponent):
         self.text = text
         self.addMember(self.text)
 
-        self.registerEvent(internals.MOUSEMOTIONEVENT, self.onMouseMove)
-        self.registerEvent(internals.MOUSEBUTTONDOWNEVENT, self.onMouseOnePress)
-        self.registerEvent(internals.MOUSEBUTTONUPEVENT, self.onMouseOneRelease)
+        self.registerEvent(framework.internals.MOUSEMOTIONEVENT, self.onMouseMove)
+        self.registerEvent(framework.internals.MOUSEBUTTONDOWNEVENT, self.onMouseOnePress)
+        self.registerEvent(framework.internals.MOUSEBUTTONUPEVENT, self.onMouseOneRelease)
 
     def drawMembers(self):
         self.text.draw()

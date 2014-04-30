@@ -1,5 +1,7 @@
 import time
+
 from pygame import freetype
+import framework
 
 from ui.components.menus import *
 
@@ -14,8 +16,8 @@ def main():
     pygame.init()
     freetype.init()
     pygame.display.set_mode((1280, 720))
-    ui.init(30)
-    ui.event.start()
+    framework.init(30)
+    framework.eventHandler.start()
 
     pygame.key.set_repeat(500, 30)
 
@@ -58,7 +60,7 @@ def main():
     panel1.setVisible(True)
 
     c_counter = ClickCounter(label)
-    btn.registerEvent(ui.internals.BUTTONPRESSEVENT, c_counter.onButtonPress)
+    btn.registerEvent(framework.internals.BUTTONPRESSEVENT, c_counter.onButtonPress)
 
     background = pygame.Surface((area.width, area.height))
     background.fill((0, 150, 150))
@@ -67,7 +69,7 @@ def main():
     while True:
         clock.tick(30)
         for event in pygame.event.get():
-            ui.event.process(event)
+            framework.eventHandler.process(event)
             if event.type == QUIT or\
             (event.type == KEYDOWN and event.key == K_ESCAPE):
                 return

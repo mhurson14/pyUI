@@ -1,11 +1,13 @@
+import pygame
 from ui.component.uicomponent import *
 from ui.displaysurface import displaysurface
+from ui.graphics import nullgraphics
 
 class Screen(UIComponent):
     def __init__(self):
 
         super().__init__(None, displaysurface.ScreenSurface,
-                         ui.graphics.nullgraphics.NullGraphics, None, None)
+                         nullgraphics.NullGraphics, None, None)
 
         self.setVisible(True)
 
