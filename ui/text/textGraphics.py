@@ -36,6 +36,11 @@ class DefaultTextGraphics:
 
         self.setSelected(0, 0)
 
+    def setDimensions(self, dimensions):
+        self.dimensions = dimensions
+        self.rect = pygame.Rect(self.topleft[0], self.topleft[1],
+                                self.dimensions[0], self.dimensions[1])
+
     def setText(self, text):
         self.text = text
         self.setSelected(0, 0)

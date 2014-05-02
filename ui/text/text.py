@@ -110,11 +110,13 @@ class Text(UIComponent):
         self.text = text
 
         self.graphics.setText(text)
-        self.display_surface.setDimensions(ui.utils.getSizeOfText(self.text, self.graphics_params.font_size,
-                                                                  self.graphics_params.font_type,
-                                                                  self.graphics_params.bold,
-                                                                  self.graphics_params.italic,
-                                                                  self.graphics_params.underline))
+        size_of_text = ui.utils.getSizeOfText(self.text, self.graphics_params.font_size,
+                                              self.graphics_params.font_type,
+                                              self.graphics_params.bold,
+                                              self.graphics_params.italic,
+                                              self.graphics_params.underline)
+        self.display_surface.setDimensions(size_of_text)
+        self.graphics.setDimensions(size_of_text)
 
         #self.graphics_params.text = self.text
 
